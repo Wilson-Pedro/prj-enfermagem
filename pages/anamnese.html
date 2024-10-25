@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>ANAMNESE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, rgb(230, 82, 107), rgb(234, 126, 144));
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            width: 50%;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-row .form-group {
+            flex: 0 0 48%;
+            margin-bottom: 20px;
+        }
+
+        /* Para telas menores */
+        @media (max-width: 768px) {
+            .form-row .form-group {
+                flex: 0 0 100%;
+            }
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .checkbox-group label {
+            margin-left: 5px;
+        }
+
+        .submit-btn {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .submit-btn button {
+            padding: 10px 20px;
+            background-color: #f48fb1;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-btn button:hover {
+            background-color: #f06292;
+        }
+
+        /* Botão Voltar no canto superior esquerdo */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #f48fb1;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:hover {
+            background-color: #f06292;
+        }
+
+        #iconeVoltar {
+            color: white;
+            font-size: 250%;
+            margin-left: 2%;
+            cursor: pointer;
+        }
+
+        #iconeVoltar:hover {
+            cursor: pointer;
+            color: rgb(255, 43, 78);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Botão de Voltar -->
+    <div class="back-btn">
+        <a href="Home.html"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+    </div>
+
+    <div class="container">
+        <h2>Anamnese</h2>
+
+        <div class="form-group">
+            <label for="motivo-consulta">Motivo da consulta</label>
+            <input type="text" id="motivo-consulta" placeholder="Motivo da consulta">
+        </div>
+
+        <div class="form-group">
+            <label for="inicio-sintomas">Início dos sintomas</label>
+            <input type="text" id="inicio-sintomas" placeholder="Dia / Mês / Ano">
+        </div>
+
+        <div class="form-group">
+            <label for="descricao-sintomas">Descrição dos sintomas</label>
+            <textarea id="descricao-sintomas" rows="4" placeholder="Descreva os sintomas..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Já aconteceu antes?</label>
+            <div class="checkbox-group">
+                <input type="radio" id="aconteceu-sim" name="aconteceu">
+                <label for="aconteceu-sim">Sim</label>
+
+                <input type="radio" id="aconteceu-nao" name="aconteceu" style="margin-left: 15px;">
+                <label for="aconteceu-nao">Não</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="doencas-cronicas">Doenças crônicas?</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="doenca-cronica-sim">
+                <label for="doenca-cronica-sim">Sim</label>
+
+                <input type="checkbox" id="doenca-cronica-nao" style="margin-left: 15px;">
+                <label for="doenca-cronica-nao">Não</label>
+            </div>
+            <input type="text" id="quais-doencas" placeholder="Se sim, quais?" style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+            <label for="alergias">Alergias?</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="alergias-sim">
+                <label for="alergias-sim">Sim</label>
+
+                <input type="checkbox" id="alergias-nao" style="margin-left: 15px;">
+                <label for="alergias-nao">Não</label>
+            </div>
+            <input type="text" id="quais-alergias" placeholder="Se sim, quais?" style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+            <label for="medicamentos">Medicamentos contínuos?</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="medicamentos-sim">
+                <label for="medicamentos-sim">Sim</label>
+
+                <input type="checkbox" id="medicamentos-nao" style="margin-left: 15px;">
+                <label for="medicamentos-nao">Não</label>
+            </div>
+            <input type="text" id="quais-medicamentos" placeholder="Se sim, quais?" style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+            <label for="doencas-familia">Doenças na família?</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="doenca-familia-sim">
+                <label for="doenca-familia-sim">Sim</label>
+
+                <input type="checkbox" id="doenca-familia-nao" style="margin-left: 15px;">
+                <label for="doenca-familia-nao">Não</label>
+            </div>
+            <input type="text" id="quais-doencas-familia" placeholder="Se sim, quais?" style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+            <label>Fuma?</label>
+            <div class="checkbox-group">
+                <input type="radio" id="fuma-sim" name="fuma">
+                <label for="fuma-sim">Sim</label>
+
+                <input type="radio" id="fuma-nao" name="fuma" style="margin-left: 15px;">
+                <label for="fuma-nao">Não</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Ingere álcool?</label>
+            <div class="checkbox-group">
+                <input type="radio" id="alcohol-sim" name="alcohol">
+                <label for="alcohol-sim">Sim</label>
+
+                <input type="radio" id="alcohol-nao" name="alcohol" style="margin-left: 15px;">
+                <label for="alcohol-nao">Não</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Pratica atividade física?</label>
+            <div class="checkbox-group">
+                <input type="radio" id="atividade-fisica-sim" name="atividade-fisica">
+                <label for="atividade-fisica-sim">Sim</label>
+
+                <input type="radio" id="atividade-fisica-nao" name="atividade-fisica" style="margin-left: 15px;">
+                <label for="atividade-fisica-nao">Não</label>
+            </div>
+        </div>
+
+        <div class="submit-btn">
+            <button type="submit">Próximo</button>
+        </div>
+
+    </div>
+
+</body>
+</html>
