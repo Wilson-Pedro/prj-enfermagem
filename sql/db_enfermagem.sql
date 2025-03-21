@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20/03/2025 às 21:26
+-- Tempo de geração: 21/03/2025 às 12:39
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `db_enfermagem`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tbl_anamnese`
+--
+
+CREATE TABLE `tbl_anamnese` (
+  `id` int(11) NOT NULL,
+  `motivo` varchar(255) NOT NULL,
+  `inicio_sintoma` date NOT NULL,
+  `descricao_sintoma` varchar(255) NOT NULL,
+  `ja_aconteceu_antes` tinyint(1) NOT NULL,
+  `tem_doencas_cronicas` tinyint(1) NOT NULL,
+  `doencas_cronicas` varchar(255) NOT NULL,
+  `tem_alergias` tinyint(1) NOT NULL,
+  `alergias` varchar(255) NOT NULL,
+  `usa_medicamentos_continuos` tinyint(1) NOT NULL,
+  `medicamentos_continuos` varchar(255) NOT NULL,
+  `tem_doencas_familia` tinyint(1) NOT NULL,
+  `doencas_familia` varchar(255) NOT NULL,
+  `fuma` tinyint(1) NOT NULL,
+  `ingere_alcool` tinyint(1) NOT NULL,
+  `atividade_fisica` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -73,6 +98,12 @@ CREATE TABLE `tbl_prontuario` (
 --
 
 --
+-- Índices de tabela `tbl_anamnese`
+--
+ALTER TABLE `tbl_anamnese`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
@@ -95,6 +126,12 @@ ALTER TABLE `tbl_prontuario`
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `tbl_anamnese`
+--
+ALTER TABLE `tbl_anamnese`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_endereco`
