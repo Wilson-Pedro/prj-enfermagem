@@ -76,7 +76,7 @@
         <div class="card">
             <input type="email" placeholder="E-mail">
             <input type="password" placeholder="Senha">
-            <a href="Home.html">
+            <a href="Home.php">
                 <button>Login</button>
             </a>
         </div>

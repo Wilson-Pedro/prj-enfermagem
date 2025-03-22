@@ -12,7 +12,7 @@
 
     <!-- Botão de Voltar -->
     <div class="back-btn">
-        <a href="Home.html"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+        <a href="Home.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
     <div class="container">

@@ -10,7 +10,7 @@
     <title>Home</title>
 </head>
 <body>
-    <a href="index.html" class="divSair">
+    <a href="index.php" class="divSair">
         <i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i>
     </a>
     <div class="header">
@@ -19,7 +19,7 @@
     </div>
 
     <div class="cards">
-        <a href="formulário.html" class="card">
+        <a href="formulário.php" class="card">
             <div>
                 <h2>Gerar novo Formulário</h2>
             </div>
@@ -29,7 +29,7 @@
                 <h2>Consultar Formulário</h2>
             </div>
         </a>
-        <a href="anamnese.html" class="card">
+        <a href="anamnese.php" class="card">
             <div>
                 <h2>ANAMNESE</h2>
             </div>
