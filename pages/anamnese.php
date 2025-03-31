@@ -1,4 +1,8 @@
 <?php
+    include('../protect.php');
+?>
+
+<?php
     include('../db/conexao.php');
 
     try {

@@ -1,4 +1,11 @@
 <?php
+    include('../protect.php');
+
+    $dateNow = new DateTime();
+    $dateFormat = $dateNow->format('Y-m-d');
+?>
+
+<?php
     include('../db/conexao.php');
 
     if(isset($_POST['finalizar'])) {
@@ -90,7 +97,7 @@
             </div>
             <div class="form-group">
                 <label for="atendimento">Data do Atendimento</label>
-                <input type="date" id="atendimento" name="data_atendimento" placeholder="Dia / Mês / Ano" required>
+                <input type="date" id="atendimento" name="data_atendimento" value="<?php echo $dateFormat ?>" placeholder="Dia / Mês / Ano" required>
             </div>
         </div>
 

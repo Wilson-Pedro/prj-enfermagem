@@ -1,3 +1,64 @@
+<?php
+session_start();
+session_destroy();
+
+include('../db/conexao.php');
+
+// $sql_insert_users = "INSERT INTO tbl_users (id, nome, email, senha) VALUES (NULL, ?, ?, ?)";
+// $stmt_users = $mysqli->prepare($sql_insert_users);
+
+// $nome = "admin";
+// $email = "admin@gmail.com";
+// $senha = "1234";
+// $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+// $stmt_users->bind_param("sss", $nome, $email, $senha_hash);
+// $stmt_users->execute();
+
+try {
+
+    if((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email']) && !empty($_POST['senha']))) {
+        if (strlen($_POST['email']) == 0) {
+            echo "Preencha seu e-mail";
+        } else if (strlen($_POST['senha']) == 0) {
+            echo "Preencha sua senha!";
+        } else {
+            //LIMPANDO MYSQLI PARA ANTI SQL INJECTION
+            $email = $mysqli->real_escape_string($_POST['email']);
+            $senha = $mysqli->real_escape_string($_POST['senha']);
+    
+            $sql_code = "SELECT * FROM tbl_users WHERE email = '$email' LIMIT 1";
+            
+            $sql_query = $mysqli->query($sql_code) or die("Falha na execução do codigo SQL: " . $mysqli);
+    
+            $quantidade = mysqli_num_rows($sql_query);
+            // FAZENDO A AUTENTICAÇÃO E REDIRECIONANDO PARA O PAINEL
+            if ($quantidade == 1) {
+                $usuario = $sql_query->fetch_assoc();
+                 if (password_verify($senha, $usuario['senha'])) {
+                      session_start();
+                     $_SESSION['id'] = $usuario['id'];
+                     $_SESSION['nome'] = $usuario['nome'];
+    
+                     header("Location: Home.php");
+                     exit();
+                 }
+
+    
+                header("Location: index.php");
+                echo "Ops... e-mail ou senha incorretos!";
+            } else {
+                echo "Ops... e-mail ou senha incorretos!";
+            }
+        }
+    }
+
+} catch(Exception $e) {
+    echo "Error ". $e;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -71,16 +132,15 @@
 </head>
 <body>
 
-    <div class="container">
+    <form method="post" class="container">
         <img src="../img/imageLogin.png" alt="Imagem Centralizada">
         <div class="card">
-            <input type="email" placeholder="E-mail">
-            <input type="password" placeholder="Senha">
-            <a href="Home.php">
-                <button>Login</button>
-            </a>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="senha" name="senha" placeholder="Senha" required>
+
+            <button type="submit">Login</button>
         </div>
-    </div>
+    </form>
 
 </body>
 </html>
