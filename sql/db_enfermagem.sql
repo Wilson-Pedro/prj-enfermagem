@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21/03/2025 às 12:39
+-- Tempo de geração: 16/09/2025 às 12:20
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_anamnese` (
   `id` int(11) NOT NULL,
+  `id_paciente` int(11) NOT NULL,
   `motivo` varchar(255) NOT NULL,
   `inicio_sintoma` date NOT NULL,
   `descricao_sintoma` varchar(255) NOT NULL,
@@ -46,6 +47,13 @@ CREATE TABLE `tbl_anamnese` (
   `atividade_fisica` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `tbl_anamnese`
+--
+
+INSERT INTO `tbl_anamnese` (`id`, `id_paciente`, `motivo`, `inicio_sintoma`, `descricao_sintoma`, `ja_aconteceu_antes`, `tem_doencas_cronicas`, `doencas_cronicas`, `tem_alergias`, `alergias`, `usa_medicamentos_continuos`, `medicamentos_continuos`, `tem_doencas_familia`, `doencas_familia`, `fuma`, `ingere_alcool`, `atividade_fisica`) VALUES
+(12, 3, 'Dores de cabeça', '2025-09-03', 'dores na cabeça constante', 1, 0, 'sem doenças crônicas', 0, 'sem alergias', 0, 'não toma medicamentos contínuos', 0, 'Não tem doenças familiares', 0, 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -58,6 +66,14 @@ CREATE TABLE `tbl_endereco` (
   `bairro` varchar(255) NOT NULL,
   `cidade` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbl_endereco`
+--
+
+INSERT INTO `tbl_endereco` (`id`, `rua`, `bairro`, `cidade`) VALUES
+(6, 'Rua da Luz', 'Maças', 'Belo Horizonte'),
+(10, 'Rua da Luz', 'Maças', 'Cidade do Relógio');
 
 -- --------------------------------------------------------
 
@@ -80,6 +96,14 @@ CREATE TABLE `tbl_paciente` (
   `id_endereco` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `tbl_paciente`
+--
+
+INSERT INTO `tbl_paciente` (`id`, `nome`, `nome_pai`, `nome_pai_consta`, `nome_mae`, `nome_mae_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`) VALUES
+(3, 'Júlio', 'Julião', 0, 'Julia', 0, '1234567', '32432432', 'MA', '(11) 98881-2345', '2342343244', 6),
+(7, 'Rafael', 'Julião', 0, 'Julia', 0, '1234567', '32432432', 'MA', '(11) 98881-2345', '2342343244', 10);
+
 -- --------------------------------------------------------
 
 --
@@ -88,10 +112,39 @@ CREATE TABLE `tbl_paciente` (
 
 CREATE TABLE `tbl_prontuario` (
   `id` int(11) NOT NULL,
-  `numero_formulario` int(11) NOT NULL,
+  `numero_prontuario` int(11) NOT NULL,
   `data_atendimento` date NOT NULL,
   `id_paciente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbl_prontuario`
+--
+
+INSERT INTO `tbl_prontuario` (`id`, `numero_prontuario`, `data_atendimento`, `id_paciente`) VALUES
+(2, 1, '2025-03-22', 3),
+(6, 2, '2025-09-14', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tbl_users`
+--
+
+CREATE TABLE `tbl_users` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `data_registro` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbl_users`
+--
+
+INSERT INTO `tbl_users` (`id`, `nome`, `email`, `senha`, `data_registro`) VALUES
+(1, 'admin', 'admin@gmail.com', '$2y$10$aqVzwRK/RTo4p25xP05wsus2OhkzYdnb4xRwDQdI5xcK5lpPhLKFm', '2025-03-30 17:40:52');
 
 --
 -- Índices para tabelas despejadas
@@ -101,7 +154,8 @@ CREATE TABLE `tbl_prontuario` (
 -- Índices de tabela `tbl_anamnese`
 --
 ALTER TABLE `tbl_anamnese`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_anamnese_paciente` (`id_paciente`);
 
 --
 -- Índices de tabela `tbl_endereco`
@@ -124,6 +178,12 @@ ALTER TABLE `tbl_prontuario`
   ADD KEY `fk_prontuario_paciente` (`id_paciente`);
 
 --
+-- Índices de tabela `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -131,29 +191,41 @@ ALTER TABLE `tbl_prontuario`
 -- AUTO_INCREMENT de tabela `tbl_anamnese`
 --
 ALTER TABLE `tbl_anamnese`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_paciente`
 --
 ALTER TABLE `tbl_paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_prontuario`
 --
 ALTER TABLE `tbl_prontuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para tabelas despejadas
 --
+
+--
+-- Restrições para tabelas `tbl_anamnese`
+--
+ALTER TABLE `tbl_anamnese`
+  ADD CONSTRAINT `fk_anamnese_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`);
 
 --
 -- Restrições para tabelas `tbl_paciente`

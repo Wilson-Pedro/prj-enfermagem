@@ -47,6 +47,13 @@ body {
     width: 100%;
 }
 
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
 .form-row {
     display: flex;
     flex-wrap: wrap;

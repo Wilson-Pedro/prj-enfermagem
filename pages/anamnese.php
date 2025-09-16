@@ -8,6 +8,7 @@
     try {
 
         if(isset($_POST['finalizar'])) {
+            $paciente = $_POST['paciente'];
             $motivo_consulta = $_POST['motivo_consulta'];
             $inicio_sintomas = $_POST['inicio_sintomas'];
             $descricao_sintomas = $_POST['descricao_sintomas'];
@@ -25,10 +26,10 @@
             $atividade_fisica = $_POST['atividade_fisica'];
     
             $stmt_anamnese = $mysqli->prepare("INSERT INTO tbl_anamnese 
-            (id, motivo, inicio_sintoma, descricao_sintoma, ja_aconteceu_antes, tem_doencas_cronicas, doencas_cronicas, tem_alergias, alergias, usa_medicamentos_continuos, medicamentos_continuos, tem_doencas_familia, doencas_familia, fuma, ingere_alcool, atividade_fisica) 
-            VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $stmt_anamnese->bind_param("sssiisisisisiii", 
-            $motivo_consulta, $inicio_sintomas, $descricao_sintomas, $aconteceu_antes, $tem_doencas_cronicas, $doencas_cronicas_descricao, 
+            (id, id_paciente, motivo, inicio_sintoma, descricao_sintoma, ja_aconteceu_antes, tem_doencas_cronicas, doencas_cronicas, tem_alergias, alergias, usa_medicamentos_continuos, medicamentos_continuos, tem_doencas_familia, doencas_familia, fuma, ingere_alcool, atividade_fisica) 
+            VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt_anamnese->bind_param("isssiisisisisiii", 
+            $paciente, $motivo_consulta, $inicio_sintomas, $descricao_sintomas, $aconteceu_antes, $tem_doencas_cronicas, $doencas_cronicas_descricao, 
             $tem_alergias, $alergias_descricao, $medicamentos, $medicamentos_descricao, $doencas_familiares, $doencas_familiares_descricao, 
             $fuma, $alcool, $atividade_fisica);
             $stmt_anamnese->execute();
@@ -52,6 +53,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/anamnese.css">
     <title>ANAMNESE</title>
+    <style>
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 
@@ -62,6 +71,22 @@
 
     <form method="post" class="container">
         <h2>Anamnese</h2>
+
+        <div class="form-group">
+            <label for="motivo-consulta">Paciente</label>
+            <select name="paciente" required>
+                <option value='' disabled selected> </option>
+                <?php
+                    $sql_paciente = "SELECT id, nome FROM tbl_paciente";
+                    $result_paciente = mysqli_query($mysqli, $sql_paciente);
+                    while ($row_paciente = mysqli_fetch_assoc($result_paciente)) {
+                ?>
+                        <option value='<?php echo $row_paciente['id'] ?>'> <?php echo $row_paciente['nome'] ?> </option>
+                <?php
+                    }
+                ?>
+        </select>
+        </div>
 
         <div class="form-group">
             <label for="motivo-consulta">Motivo da consulta</label>
@@ -171,7 +196,7 @@
         </div>
 
         <div class="submit-btn">
-            <button type="submit" name="finalizar">Próximo</button>
+            <button type="submit" name="finalizar">Cadastrar</button>
         </div>
 
     </form>

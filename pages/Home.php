@@ -19,18 +19,18 @@
     </a>
     <div class="header">
         <img src="../img/imageHomeUser.png" alt="Imagem do Usuário">
-        <h1>Bem-vindo, Wanderley!</h1>
+        <h1 style="cursor:default;">Seja Bem-vindo!</h1>
     </div>
 
     <div class="cards">
         <a href="formulário.php" class="card">
             <div>
-                <h2>Gerar novo Formulário</h2>
+                <h2>Cadastrar Prontuário</h2>
             </div>
         </a>
         <a href="" class="card">
             <div>
-                <h2>Consultar Formulário</h2>
+                <h2>Consultar Prontuário</h2>
             </div>
         </a>
         <a href="anamnese.php" class="card">
