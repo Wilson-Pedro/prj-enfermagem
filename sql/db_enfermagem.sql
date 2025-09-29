@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/09/2025 às 12:20
+-- Tempo de geração: 29/09/2025 às 15:14
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -33,6 +33,8 @@ CREATE TABLE `tbl_anamnese` (
   `motivo` varchar(255) NOT NULL,
   `inicio_sintoma` date NOT NULL,
   `descricao_sintoma` varchar(255) NOT NULL,
+  `rh` varchar(255) NOT NULL,
+  `sinais_vitais` varchar(255) NOT NULL,
   `ja_aconteceu_antes` tinyint(1) NOT NULL,
   `tem_doencas_cronicas` tinyint(1) NOT NULL,
   `doencas_cronicas` varchar(255) NOT NULL,
@@ -42,6 +44,8 @@ CREATE TABLE `tbl_anamnese` (
   `medicamentos_continuos` varchar(255) NOT NULL,
   `tem_doencas_familia` tinyint(1) NOT NULL,
   `doencas_familia` varchar(255) NOT NULL,
+  `outras_drogas` varchar(255) NOT NULL,
+  `outras_drogas_descricao` varchar(255) NOT NULL,
   `fuma` tinyint(1) NOT NULL,
   `ingere_alcool` tinyint(1) NOT NULL,
   `atividade_fisica` tinyint(1) NOT NULL
@@ -51,8 +55,8 @@ CREATE TABLE `tbl_anamnese` (
 -- Despejando dados para a tabela `tbl_anamnese`
 --
 
-INSERT INTO `tbl_anamnese` (`id`, `id_paciente`, `motivo`, `inicio_sintoma`, `descricao_sintoma`, `ja_aconteceu_antes`, `tem_doencas_cronicas`, `doencas_cronicas`, `tem_alergias`, `alergias`, `usa_medicamentos_continuos`, `medicamentos_continuos`, `tem_doencas_familia`, `doencas_familia`, `fuma`, `ingere_alcool`, `atividade_fisica`) VALUES
-(12, 3, 'Dores de cabeça', '2025-09-03', 'dores na cabeça constante', 1, 0, 'sem doenças crônicas', 0, 'sem alergias', 0, 'não toma medicamentos contínuos', 0, 'Não tem doenças familiares', 0, 0, 1);
+INSERT INTO `tbl_anamnese` (`id`, `id_paciente`, `motivo`, `inicio_sintoma`, `descricao_sintoma`, `rh`, `sinais_vitais`, `ja_aconteceu_antes`, `tem_doencas_cronicas`, `doencas_cronicas`, `tem_alergias`, `alergias`, `usa_medicamentos_continuos`, `medicamentos_continuos`, `tem_doencas_familia`, `doencas_familia`, `outras_drogas`, `outras_drogas_descricao`, `fuma`, `ingere_alcool`, `atividade_fisica`) VALUES
+(19, 16, 'Dores de cabeça', '2025-09-15', 'Fortes dores na cabeça', 'A', '2', 0, 0, 'sem doenças crônicas', 0, 'sem alergias', 0, 'não toma medicamentos contínuos', 0, 'Não tem doenças familiares', '1', 'Dipirona', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -62,18 +66,19 @@ INSERT INTO `tbl_anamnese` (`id`, `id_paciente`, `motivo`, `inicio_sintoma`, `de
 
 CREATE TABLE `tbl_endereco` (
   `id` int(11) NOT NULL,
+  `cep` varchar(9) NOT NULL,
   `rua` varchar(255) NOT NULL,
   `bairro` varchar(255) NOT NULL,
-  `cidade` varchar(255) NOT NULL
+  `cidade` varchar(255) NOT NULL,
+  `complemento` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `tbl_endereco`
 --
 
-INSERT INTO `tbl_endereco` (`id`, `rua`, `bairro`, `cidade`) VALUES
-(6, 'Rua da Luz', 'Maças', 'Belo Horizonte'),
-(10, 'Rua da Luz', 'Maças', 'Cidade do Relógio');
+INSERT INTO `tbl_endereco` (`id`, `cep`, `rua`, `bairro`, `cidade`, `complemento`) VALUES
+(19, '68971970', 'Rua da Luz', 'Maças', 'Belo Horizonte', '');
 
 -- --------------------------------------------------------
 
@@ -84,8 +89,6 @@ INSERT INTO `tbl_endereco` (`id`, `rua`, `bairro`, `cidade`) VALUES
 CREATE TABLE `tbl_paciente` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
-  `nome_pai` varchar(255) NOT NULL,
-  `nome_pai_consta` tinyint(1) NOT NULL,
   `nome_mae` varchar(255) NOT NULL,
   `nome_mae_consta` tinyint(1) NOT NULL,
   `cpf` varchar(14) NOT NULL,
@@ -100,9 +103,8 @@ CREATE TABLE `tbl_paciente` (
 -- Despejando dados para a tabela `tbl_paciente`
 --
 
-INSERT INTO `tbl_paciente` (`id`, `nome`, `nome_pai`, `nome_pai_consta`, `nome_mae`, `nome_mae_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`) VALUES
-(3, 'Júlio', 'Julião', 0, 'Julia', 0, '1234567', '32432432', 'MA', '(11) 98881-2345', '2342343244', 6),
-(7, 'Rafael', 'Julião', 0, 'Julia', 0, '1234567', '32432432', 'MA', '(11) 98881-2345', '2342343244', 10);
+INSERT INTO `tbl_paciente` (`id`, `nome`, `nome_mae`, `nome_mae_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`) VALUES
+(16, 'Rafael', 'Julia', 0, '1234567', '45646546', 'MA', '(11) 98881-2345', '2342343244', 19);
 
 -- --------------------------------------------------------
 
@@ -122,8 +124,7 @@ CREATE TABLE `tbl_prontuario` (
 --
 
 INSERT INTO `tbl_prontuario` (`id`, `numero_prontuario`, `data_atendimento`, `id_paciente`) VALUES
-(2, 1, '2025-03-22', 3),
-(6, 2, '2025-09-14', 7);
+(15, 3213, '2025-09-29', 16);
 
 -- --------------------------------------------------------
 
@@ -191,25 +192,25 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT de tabela `tbl_anamnese`
 --
 ALTER TABLE `tbl_anamnese`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_paciente`
 --
 ALTER TABLE `tbl_paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_prontuario`
 --
 ALTER TABLE `tbl_prontuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_users`

@@ -9,28 +9,48 @@
 
         if(isset($_POST['finalizar'])) {
             $paciente = $_POST['paciente'];
+
             $motivo_consulta = $_POST['motivo_consulta'];
+
             $inicio_sintomas = $_POST['inicio_sintomas'];
+
             $descricao_sintomas = $_POST['descricao_sintomas'];
+
+            $rh = $_POST['rh'];
+
+            $sinais_vitais = $_POST['sinais_vitais'];
+
             $aconteceu_antes = $_POST['aconteceu_antes'];
+
             $tem_doencas_cronicas = $_POST['doenca_cronica'];
             $doencas_cronicas_descricao = !empty($_POST['doencas_cronicas_descricao']) ? $_POST['doencas_cronicas_descricao']  : 'sem doenças crônicas';
+
             $tem_alergias = $_POST['alergias'];
             $alergias_descricao = !empty($_POST['alergias_descricao']) ? $_POST['alergias_descricao']  : 'sem alergias';
+
             $medicamentos = $_POST['medicamentos'];
             $medicamentos_descricao = !empty($_POST['medicamentos_descricao']) ? $_POST['medicamentos_descricao']  : 'não toma medicamentos contínuos';
+
             $doencas_familiares = $_POST['doencas_familiares'];
             $doencas_familiares_descricao = !empty($_POST['doencas_familiares_descricao']) ? $_POST['doencas_familiares_descricao']  : 'Não tem doenças familiares';
+
+            $drogas = $_POST['drogas'];
+            $drogas_descricao = !empty($_POST['drogas_descricao']) ? $_POST['drogas_descricao']  : 'Não tem doenças familiares';
+
             $fuma = $_POST['fuma'];
+
             $alcool = $_POST['alcool'];
+
             $atividade_fisica = $_POST['atividade_fisica'];
     
             $stmt_anamnese = $mysqli->prepare("INSERT INTO tbl_anamnese 
-            (id, id_paciente, motivo, inicio_sintoma, descricao_sintoma, ja_aconteceu_antes, tem_doencas_cronicas, doencas_cronicas, tem_alergias, alergias, usa_medicamentos_continuos, medicamentos_continuos, tem_doencas_familia, doencas_familia, fuma, ingere_alcool, atividade_fisica) 
-            VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $stmt_anamnese->bind_param("isssiisisisisiii", 
-            $paciente, $motivo_consulta, $inicio_sintomas, $descricao_sintomas, $aconteceu_antes, $tem_doencas_cronicas, $doencas_cronicas_descricao, 
-            $tem_alergias, $alergias_descricao, $medicamentos, $medicamentos_descricao, $doencas_familiares, $doencas_familiares_descricao, 
+            (id, id_paciente, motivo, inicio_sintoma, descricao_sintoma, rh, sinais_vitais, ja_aconteceu_antes, tem_doencas_cronicas, doencas_cronicas, tem_alergias, alergias, 
+            usa_medicamentos_continuos, medicamentos_continuos, tem_doencas_familia, doencas_familia, outras_drogas, outras_drogas_descricao, 
+            fuma, ingere_alcool, atividade_fisica) 
+            VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt_anamnese->bind_param("isssssiisisisisisiii", 
+            $paciente, $motivo_consulta, $inicio_sintomas, $descricao_sintomas, $rh, $sinais_vitais, $aconteceu_antes, $tem_doencas_cronicas, $doencas_cronicas_descricao, 
+            $tem_alergias, $alergias_descricao, $medicamentos, $medicamentos_descricao, $doencas_familiares, $doencas_familiares_descricao, $drogas, $drogas_descricao,
             $fuma, $alcool, $atividade_fisica);
             $stmt_anamnese->execute();
             $stmt_anamnese->close();
@@ -89,7 +109,7 @@
         </div>
 
         <div class="form-group">
-            <label for="motivo-consulta">Motivo da consulta</label>
+            <label for="motivo-consulta">Queixa principal</label>
             <input type="text" id="motivo-consulta" name="motivo_consulta" placeholder="Motivo da consulta" required>
         </div>
 
@@ -101,6 +121,16 @@
         <div class="form-group">
             <label for="descricao-sintomas">Descrição dos sintomas</label>
             <textarea id="descricao-sintomas" name="descricao_sintomas" rows="4" placeholder="Descreva os sintomas..." required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="rh">RH</label>
+            <input type="text" id="rh" name="rh" placeholder="RH" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sinais-vitais">Sinais Vitais</label>
+            <input type="text" id="sinais-vitais" name="sinais_vitais" placeholder="Sinais Vitais" required>
         </div>
 
         <div class="form-group">
@@ -160,6 +190,18 @@
                 <label for="doenca-familia-nao">Não</label>
             </div>
             <input type="text" id="quais-doencas-familia" name="doencas_familiares_descricao" placeholder="Se sim, quais?" style="margin-top: 10px;">
+        </div>
+
+        <div class="form-group">
+            <label for="drogas">Outras drogas?</label>
+            <div class="checkbox-group">
+                <input type="radio" id="drogas-sim" name="drogas" value="1" required>
+                <label for="drogas-sim">Sim</label>
+
+                <input type="radio" id="drogas-nao" name="drogas" value="0" style="margin-left: 15px;" required>
+                <label for="drogas-nao">Não</label>
+            </div>
+            <input type="text" id="drogas" name="drogas_descricao" placeholder="Se sim, quais?" style="margin-top: 10px;">
         </div>
 
         <div class="form-group">

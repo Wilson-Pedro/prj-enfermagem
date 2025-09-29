@@ -22,16 +22,13 @@
         $nome = $_POST['nome'];
         $telefone = $_POST['telefone'];
         $nome_mae = $_POST['nome_mae'];
-        $nome_pai = $_POST['nome_pai'];
         $cartao_sus = $_POST['cartao_sus'];
-        $nome_mae_consta = empty($_POST['nao_consta_mae'])  ? $nao_consta_mae = 0 : $nao_consta_mae = 1;        ;
-        $nome_pai_consta = empty($_POST['nao_consta_pai'])  ? $nao_consta_mae = 0 : $nao_consta_mae = 1;
-
-        //empty($nao_consta_mae) ? $nao_consta_mae = 0 : $nao_consta_mae = 1;
+        $nome_mae_consta = empty($_POST['nome_mae_consta'])  ? $nao_consta_mae = 0 : $nao_consta_mae = 1;
 
         $data_nascimento = $_POST['data_nascimento'];
 
         //DADOS PARA TBL_ENDERECO
+        $cep = $_POST['cep'];
         $rua = $_POST['rua'];
         $bairro = $_POST['bairro'];
         $cidade = $_POST['cidade'];
@@ -40,17 +37,17 @@
         try {
 
             //INSERT EM TBL_ENDERECO
-            $stmt_id_endereco = $mysqli->prepare("INSERT INTO tbl_endereco (id, rua, bairro, cidade) VALUES (NULL, ?, ?, ?);");
-            $stmt_id_endereco->bind_param("sss", $rua, $bairro, $cidade);
+            $stmt_id_endereco = $mysqli->prepare("INSERT INTO tbl_endereco (id, cep, rua, bairro, cidade) VALUES (NULL, ?, ?, ?, ?);");
+            $stmt_id_endereco->bind_param("ssss", $cep, $rua, $bairro, $cidade);
             $stmt_id_endereco->execute();
             $id_endereco = $mysqli->insert_id;
             $stmt_id_endereco->close();
 
             //INSERT EM TBL_PACIENTE
             $stmt_id_paciente = $mysqli->prepare("INSERT INTO tbl_paciente 
-            (id, nome, nome_pai, nome_pai_consta, nome_mae, nome_mae_consta, cpf, rg, ssp, telefone, cartao_sus, id_endereco) 
-            VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_id_paciente->bind_param("ssisisssssi", $nome, $nome_pai, $nome_pai_consta, $nome_mae, $nome_mae_consta, $cpf, $rg, $ssp, $telefone, $cartao_sus, $id_endereco);
+            (id, nome, nome_mae, nome_mae_consta, cpf, rg, ssp, telefone, cartao_sus, id_endereco) 
+            VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt_id_paciente->bind_param("ssisssssi", $nome, $nome_mae, $nome_mae_consta, $cpf, $rg, $ssp, $telefone, $cartao_sus, $id_endereco);
             $stmt_id_paciente->execute();
             $id_paciente = $mysqli->insert_id;
             $stmt_id_paciente->close();
@@ -130,19 +127,12 @@
 
         <div class="form-row">
             <div class="form-group">
+                <label for="nome-mae">Nome da Mãe</label>
+                <input type="text" id="nome-mae" name="nome_mae" placeholder="Nome da Mãe">
+            </div>
+            <div class="form-group">
                 <label for="telefone">Telefone</label>
                 <input type="text" id="telefone" name="telefone" placeholder="Telefone" required>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="nome-mae">Nome da Mãe</label>
-                <input type="text" id="nome-mae" name="nome_mae" placeholder="Nome da Mãe" required>
-            </div>
-            <div class="form-group">
-                <label for="nome-pai">Nome do Pai</label>
-                <input type="text" id="nome-pai" name="nome_pai" placeholder="Nome do Pai" required>
             </div>
         </div>
 
@@ -151,21 +141,17 @@
                 <input type="checkbox" id="nao-consta-mae" name="nome_mae_consta">
                 <label for="nao-consta-mae">Não Consta</label>
             </div>
-            <div class="checkbox-group">
-                <input type="checkbox" id="nao-consta-pai" name="nome_pai_consta">
-                <label for="nao-consta-pai">Não Consta</label>
-            </div>
         </div>
         <br>
         <div class="form-group">
             <label for="sus">Cartão do SUS</label>
-            <input type="text" id="sus" name="cartao_sus" placeholder="SUS" required>
+            <input type="text" id="sus" name="cartao_sus" placeholder="SUS">
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label for="bairro">Bairro</label>
-                <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+                <label for="cep">CEP</label>
+                <input type="text" id="cep" name="cep" placeholder="cep" required>
             </div>
             <div class="form-group">
                 <label for="rua">Rua</label>
@@ -174,8 +160,22 @@
         </div>
 
         <div class="form-group">
-            <label for="cidade">Cidade</label>
-            <input type="text" id="cidade" name="cidade" placeholder="Cidade" required>
+            <div class="form-group">
+                <label for="rua">Bairro</label>
+                <input type="text" id="bairro" name="bairro" placeholder="bairro" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" name="cidade" placeholder="Cidade" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label for="cidade">Complemento</label>
+                <textarea name="message" rows="5" cols="30" id="complemento" name="complemento" placeholder="complemento"></textarea>
+            </div>
         </div>
 
         <div class="checkbox-group">
