@@ -1,17 +1,14 @@
-<?php
-include('../protect.php');
-?>
-
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <title>Home</title>
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
+
+<style>
     body {
         margin: 0;
         font-family: "Segoe UI", Arial, sans-serif;
@@ -31,7 +28,6 @@ include('../protect.php');
 
     header img {
         height: 45px;
-        cursor: pointer;
     }
 
     .logout {
@@ -88,32 +84,31 @@ include('../protect.php');
         box-shadow: 0px 6px 14px rgba(0,0,0,0.25);
     }
 </style>
+
 </head>
-
 <body>
-    <header>
-        <a href="index.php" class="logout" title="Sair">
-            <i class="bi bi-arrow-left-circle-fill"></i>
-        </a>
-        <a href="Home.php" title="logo estácio">
-             <img src="../img/estacio-logo.png" alt="Logo Estácio">
-        </a>
-    </header>
 
-    <!-- Conteúdo principal -->
-    <main>
-        <div class="profile">
-            <img src="../img/imageHomeUser.png" alt="Usuário">
-            <h1>Seja Bem-vindo!</h1>
-        </div>
+<!-- Barra superior -->
+<header>
+    <img src="../img/estacio-logo.png" alt="Logo Estácio">
+    <a href="index.php" class="logout" title="Sair">
+        <i class="bi bi-arrow-left-circle-fill"></i>
+    </a>
+</header>
 
-        <div class="cards">
-            <a href="formulário.php" class="card">Cadastrar Prontuário</a>
-            <a href="" class="card">Consultar Prontuário</a>
-            <a href="anamnese.php" class="card">ANAMNESE</a>
-        </div>
-    </main>
+<!-- Conteúdo principal -->
+<main>
+    <div class="profile">
+        <img src="../img/imageHomeUser.png" alt="Usuário">
+        <h1>Seja Bem-vindo!</h1>
+    </div>
+
+    <div class="cards">
+        <a href="formulário.php" class="card">Cadastrar Prontuário</a>
+        <a href="" class="card">Consultar Prontuário</a>
+        <a href="anamnese.php" class="card">ANAMNESE</a>
+    </div>
+</main>
 
 </body>
-
 </html>
