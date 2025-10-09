@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SINTRACEMA - Sucesso!</title>
+    <title>Sucesso!</title>
     <meta charset='utf-8'>
     <meta lang="pt-br">
     <link rel="icon" type="image/x-icon" href="imagens/graduation-hat-material-design-png_131387.jpg">
