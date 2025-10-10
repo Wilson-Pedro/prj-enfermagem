@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09/10/2025 às 02:11
+-- Tempo de geração: 10/10/2025 às 15:12
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -67,6 +67,13 @@ CREATE TABLE `tbl_endereco` (
   `complemento` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `tbl_endereco`
+--
+
+INSERT INTO `tbl_endereco` (`id`, `cep`, `rua`, `bairro`, `cidade`, `complemento`) VALUES
+(1, '68970-970', 'Rua da Luz', 'Liberdade', 'Cidade do Relógio', '');
+
 -- --------------------------------------------------------
 
 --
@@ -104,6 +111,13 @@ CREATE TABLE `tbl_paciente` (
   `registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `tbl_paciente`
+--
+
+INSERT INTO `tbl_paciente` (`id`, `nome`, `nome_mae`, `nome_mae_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`, `registro`) VALUES
+(1, 'Jivalson', 'Julia', 0, '12345677777', '45646546', 'MA', '98986117232', '2342343244', 1, '2025-10-10 13:06:57');
+
 -- --------------------------------------------------------
 
 --
@@ -121,13 +135,35 @@ CREATE TABLE `tbl_prontuario` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `tbl_tipo_usuario`
+--
+
+CREATE TABLE `tbl_tipo_usuario` (
+  `id` int(11) NOT NULL,
+  `tipo_usuario` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbl_tipo_usuario`
+--
+
+INSERT INTO `tbl_tipo_usuario` (`id`, `tipo_usuario`) VALUES
+(1, 'admin'),
+(2, 'professor'),
+(3, 'aluno');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `tbl_users`
 --
 
 CREATE TABLE `tbl_users` (
   `id` int(11) NOT NULL,
+  `id_tipo_usuario` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `matricula` varchar(50) NOT NULL,
+  `cpf` varchar(11) NOT NULL,
   `senha` varchar(255) NOT NULL,
   `data_registro` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -136,8 +172,8 @@ CREATE TABLE `tbl_users` (
 -- Despejando dados para a tabela `tbl_users`
 --
 
-INSERT INTO `tbl_users` (`id`, `nome`, `email`, `senha`, `data_registro`) VALUES
-(1, 'admin', 'admin@gmail.com', '$2y$10$QqkMdFi8Neiym.IFqnUumuIIJvaAwEDG8M4QlIp7E55F.rPcxHeq.', '2025-10-09 00:10:51');
+INSERT INTO `tbl_users` (`id`, `id_tipo_usuario`, `nome`, `matricula`, `cpf`, `senha`, `data_registro`) VALUES
+(3, 1, 'admin', '2025', '11111111111', '$2y$10$WtZ1xf1ubQ4IRnCTKwyho.wA9mYRoB8nKs5ftASRxXSU5qCEi3ul6', '2025-10-10 12:21:38');
 
 --
 -- Índices para tabelas despejadas
@@ -178,10 +214,18 @@ ALTER TABLE `tbl_prontuario`
   ADD KEY `fk_prontuario_paciente` (`id_paciente`);
 
 --
+-- Índices de tabela `tbl_tipo_usuario`
+--
+ALTER TABLE `tbl_tipo_usuario`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `matricula_unica` (`matricula`),
+  ADD KEY `fk_user_tipo_usuario` (`id_tipo_usuario`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -197,7 +241,7 @@ ALTER TABLE `tbl_anamnese`
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_exame_fisico`
@@ -209,7 +253,7 @@ ALTER TABLE `tbl_exame_fisico`
 -- AUTO_INCREMENT de tabela `tbl_paciente`
 --
 ALTER TABLE `tbl_paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_prontuario`
@@ -218,10 +262,16 @@ ALTER TABLE `tbl_prontuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `tbl_tipo_usuario`
+--
+ALTER TABLE `tbl_tipo_usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restrições para tabelas despejadas
@@ -250,6 +300,12 @@ ALTER TABLE `tbl_paciente`
 --
 ALTER TABLE `tbl_prontuario`
   ADD CONSTRAINT `fk_prontuario_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`);
+
+--
+-- Restrições para tabelas `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD CONSTRAINT `fk_user_tipo_usuario` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `tbl_tipo_usuario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

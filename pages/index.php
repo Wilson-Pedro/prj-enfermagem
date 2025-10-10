@@ -4,30 +4,32 @@ session_destroy();
 
 include('../db/conexao.php');
 
-// $sql_insert_users = "INSERT INTO tbl_users (id, nome, email, senha) VALUES (NULL, ?, ?, ?)";
+// $sql_insert_users = "INSERT INTO tbl_users (id, id_tipo_usuario, nome, matricula, cpf, senha) VALUES (NULL, ?, ?, ?, ?, ?)";
 // $stmt_users = $mysqli->prepare($sql_insert_users);
 
+// $id_tipo_usuario = 1;
 // $nome = "admin";
-// $email = "admin@gmail.com";
+// $matricula = "2025";
+// $cpf = "11111111111";
 // $senha = "1234";
 // $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-// $stmt_users->bind_param("sss", $nome, $email, $senha_hash);
+// $stmt_users->bind_param("issss", $id_tipo_usuario, $nome, $matricula, $cpf, $senha_hash);
 // $stmt_users->execute();
 
 try {
 
-    if((isset($_POST['email']) && isset($_POST['senha'])) && (!empty($_POST['email']) && !empty($_POST['senha']))) {
-        if (strlen($_POST['email']) == 0) {
-            echo "Preencha seu e-mail";
+    if((isset($_POST['matricula']) && isset($_POST['senha'])) && (!empty($_POST['matricula']) && !empty($_POST['senha']))) {
+        if (strlen($_POST['matricula']) == 0) {
+            echo "Preencha sua matricula";
         } else if (strlen($_POST['senha']) == 0) {
             echo "Preencha sua senha!";
         } else {
             //LIMPANDO MYSQLI PARA ANTI SQL INJECTION
-            $email = $mysqli->real_escape_string($_POST['email']);
+            $matricula = $mysqli->real_escape_string($_POST['matricula']);
             $senha = $mysqli->real_escape_string($_POST['senha']);
     
-            $sql_code = "SELECT * FROM tbl_users WHERE email = '$email' LIMIT 1";
+            $sql_code = "SELECT * FROM tbl_users WHERE matricula = '$matricula' LIMIT 1";
             
             $sql_query = $mysqli->query($sql_code) or die("Falha na execução do codigo SQL: " . $mysqli);
     
@@ -135,7 +137,7 @@ try {
     <form method="post" class="container">
         <img src="../img/imageLogin.png" alt="Imagem Centralizada">
         <div class="card">
-            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="text" name="matricula" placeholder="Matricula" required>
             <input type="senha" name="senha" placeholder="Senha" required>
 
             <button type="submit">Login</button>

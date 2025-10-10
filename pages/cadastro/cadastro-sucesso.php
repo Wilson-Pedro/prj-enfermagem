@@ -1,5 +1,5 @@
 <?php
-    include('../protect.php');
+    include('../../protect.php');
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="imagens/graduation-hat-material-design-png_131387.jpg">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
     <style>
         body {
             background-color:rgb(176, 231, 184);
@@ -80,7 +80,7 @@
           <p>Tudo certo!</p>
           <h2>Cadastro realizado com sucesso.</h2>
           <div class="ok-btn">
-          <a href="Home.php" class="btn btn-success">OK</a>
+          <a href="../Home.php" class="btn btn-success">OK</a>
         </div>
   </div>
     </main>
