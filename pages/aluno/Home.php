@@ -1,5 +1,5 @@
 <?php
-include('../protect.php');
+include('../../protect.php');
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@ include('../protect.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
@@ -92,26 +92,19 @@ include('../protect.php');
 
 <body>
     <header>
-        <a href="index.php" class="logout" title="Sair">
+        <a href="../logout.php" class="logout" title="Sair">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </a>
         <a href="Home.php" title="logo estácio">
-             <img src="../img/estacio-logo.png" alt="Logo Estácio">
+             <img src="../../img/estacio-logo.png" alt="Logo Estácio">
         </a>
     </header>
 
     <!-- Conteúdo principal -->
     <main>
         <div class="profile">
-            <img src="../img/imageHomeUser.png" alt="Usuário">
-            <h1>Seja Bem-vindo!</h1>
-        </div>
-
-        <div class="cards">
-            <a href="cadastro/formulário.php" class="card">Cadastrar Prontuário</a>
-            <a href="#" class="card">Consultar Prontuário</a>
-            <a href="cadastro/cadastro-usuario.php" class="card">Cadastrar Usuário</a>
-            <a href="cadastro/anamnese.php" class="card">ANAMNESE</a>
+            <img src="../../img/imageHomeUser.png" alt="Usuário">
+            <h1>Seja Bem-vindo Aluno(a)!</h1>
         </div>
     </main>
 

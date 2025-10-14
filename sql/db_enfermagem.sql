@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/10/2025 às 15:12
+-- Tempo de geração: 14/10/2025 às 02:12
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -173,7 +173,9 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`id`, `id_tipo_usuario`, `nome`, `matricula`, `cpf`, `senha`, `data_registro`) VALUES
-(3, 1, 'admin', '2025', '11111111111', '$2y$10$WtZ1xf1ubQ4IRnCTKwyho.wA9mYRoB8nKs5ftASRxXSU5qCEi3ul6', '2025-10-10 12:21:38');
+(3, 1, 'admin', '2025', '11111111111', '$2y$10$WtZ1xf1ubQ4IRnCTKwyho.wA9mYRoB8nKs5ftASRxXSU5qCEi3ul6', '2025-10-10 12:21:38'),
+(8, 2, 'Carla da Silva', '20251', '1234567', '$2y$10$Ganf9XyoHw6JwtiiMWcPBuDRyTS1NCdBY3wqHqAvzThMnlLFOC.Aq', '2025-10-12 12:11:50'),
+(9, 3, 'Murilo SIlva', '20252', '123456', '$2y$10$zZRLD1o0v/yp4M84x4fwV.RBDumQt7UxPIe99nx3u9cAzVmJs6YvK', '2025-10-12 12:21:55');
 
 --
 -- Índices para tabelas despejadas
@@ -271,7 +273,7 @@ ALTER TABLE `tbl_tipo_usuario`
 -- AUTO_INCREMENT de tabela `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restrições para tabelas despejadas

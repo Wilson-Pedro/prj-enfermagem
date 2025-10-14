@@ -1,12 +1,12 @@
 <?php
-    include('../../protect.php');
+    include('../../../protect.php');
 
     $dateNow = new DateTime();
     $dateFormat = $dateNow->format('Y-m-d');
 ?>
 
 <?php
-    include('../../db/conexao.php');
+    include('../../../db/conexao.php');
 
     if(isset($_POST['finalizar'])) {
 
@@ -73,9 +73,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../css/formulario.css">
+    <link rel="stylesheet" href="../../../css/formulario.css">
     <title>Criar Formulário</title>
 </head>
 <body>
