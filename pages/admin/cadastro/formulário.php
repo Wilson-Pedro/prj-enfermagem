@@ -32,22 +32,22 @@
         $rua = $_POST['rua'];
         $bairro = $_POST['bairro'];
         $cidade = $_POST['cidade'];
-
+        $complemento = $_POST['complemento'];
 
         try {
 
             //INSERT EM TBL_ENDERECO
-            $stmt_id_endereco = $mysqli->prepare("INSERT INTO tbl_endereco (id, cep, rua, bairro, cidade) VALUES (NULL, ?, ?, ?, ?);");
-            $stmt_id_endereco->bind_param("ssss", $cep, $rua, $bairro, $cidade);
+            $stmt_id_endereco = $mysqli->prepare("INSERT INTO tbl_endereco (id, cep, rua, bairro, cidade, complemento) VALUES (NULL, ?, ?, ?, ?, ?);");
+            $stmt_id_endereco->bind_param("sssss", $cep, $rua, $bairro, $cidade, $complemento);
             $stmt_id_endereco->execute();
             $id_endereco = $mysqli->insert_id;
             $stmt_id_endereco->close();
 
             //INSERT EM TBL_PACIENTE
             $stmt_id_paciente = $mysqli->prepare("INSERT INTO tbl_paciente 
-            (id, nome, nome_mae, nome_mae_consta, cpf, rg, ssp, telefone, cartao_sus, id_endereco) 
-            VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_id_paciente->bind_param("ssisssssi", $nome, $nome_mae, $nome_mae_consta, $cpf, $rg, $ssp, $telefone, $cartao_sus, $id_endereco);
+            (id, nome, data_nascimento, nome_mae, nome_mae_consta, cpf, rg, ssp, telefone, cartao_sus, id_endereco) 
+            VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt_id_paciente->bind_param("sssisssssi", $nome, $data_nascimento, $nome_mae, $nome_mae_consta, $cpf, $rg, $ssp, $telefone, $cartao_sus, $id_endereco);
             $stmt_id_paciente->execute();
             $id_paciente = $mysqli->insert_id;
             $stmt_id_paciente->close();
@@ -174,7 +174,7 @@
         <div class="form-group">
             <div class="form-group">
                 <label for="cidade">Complemento</label>
-                <textarea name="message" rows="5" cols="30" id="complemento" name="complemento" placeholder="complemento"></textarea>
+                <textarea rows="5" cols="30" id="complemento" name="complemento" placeholder="complemento"></textarea>
             </div>
         </div>
 

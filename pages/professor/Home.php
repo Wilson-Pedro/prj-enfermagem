@@ -105,7 +105,7 @@ include('../../protect.php');
     <main>
         <div class="profile">
             <img src="../../img/imageHomeUser.png" alt="Usuário">
-            <h1>Seja Bem-vindo Professor(a)!</h1>
+            <h1>Seja Bem-vindo(a) <?php echo $_SESSION['nome']?>!</h1>
         </div>
 
     </main>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/10/2025 às 02:12
+-- Tempo de geração: 16/10/2025 às 02:20
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -72,7 +72,7 @@ CREATE TABLE `tbl_endereco` (
 --
 
 INSERT INTO `tbl_endereco` (`id`, `cep`, `rua`, `bairro`, `cidade`, `complemento`) VALUES
-(1, '68970-970', 'Rua da Luz', 'Liberdade', 'Cidade do Relógio', '');
+(2, '68971970', 'Rua da Luz', 'Goiabas', 'Belo Horizonte', '');
 
 -- --------------------------------------------------------
 
@@ -100,6 +100,7 @@ CREATE TABLE `tbl_exame_fisico` (
 CREATE TABLE `tbl_paciente` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
+  `data_nascimento` date NOT NULL,
   `nome_mae` varchar(255) NOT NULL,
   `nome_mae_consta` tinyint(1) NOT NULL,
   `cpf` varchar(14) NOT NULL,
@@ -115,8 +116,8 @@ CREATE TABLE `tbl_paciente` (
 -- Despejando dados para a tabela `tbl_paciente`
 --
 
-INSERT INTO `tbl_paciente` (`id`, `nome`, `nome_mae`, `nome_mae_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`, `registro`) VALUES
-(1, 'Jivalson', 'Julia', 0, '12345677777', '45646546', 'MA', '98986117232', '2342343244', 1, '2025-10-10 13:06:57');
+INSERT INTO `tbl_paciente` (`id`, `nome`, `data_nascimento`, `nome_mae`, `nome_mae_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`, `registro`) VALUES
+(2, 'Rafaela', '1999-10-14', 'Julia', 0, '34276512387', '45646546', 'MA', '(11) 98881-2345', '', 2, '2025-10-15 23:53:43');
 
 -- --------------------------------------------------------
 
@@ -131,6 +132,13 @@ CREATE TABLE `tbl_prontuario` (
   `id_paciente` int(11) NOT NULL,
   `registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbl_prontuario`
+--
+
+INSERT INTO `tbl_prontuario` (`id`, `numero_prontuario`, `data_atendimento`, `id_paciente`, `registro`) VALUES
+(1, 1234, '2025-10-15', 2, '2025-10-15 23:53:44');
 
 -- --------------------------------------------------------
 
@@ -173,7 +181,7 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`id`, `id_tipo_usuario`, `nome`, `matricula`, `cpf`, `senha`, `data_registro`) VALUES
-(3, 1, 'admin', '2025', '11111111111', '$2y$10$WtZ1xf1ubQ4IRnCTKwyho.wA9mYRoB8nKs5ftASRxXSU5qCEi3ul6', '2025-10-10 12:21:38'),
+(3, 1, 'Ana', '2025', '11111111111', '$2y$10$WtZ1xf1ubQ4IRnCTKwyho.wA9mYRoB8nKs5ftASRxXSU5qCEi3ul6', '2025-10-15 23:18:29'),
 (8, 2, 'Carla da Silva', '20251', '1234567', '$2y$10$Ganf9XyoHw6JwtiiMWcPBuDRyTS1NCdBY3wqHqAvzThMnlLFOC.Aq', '2025-10-12 12:11:50'),
 (9, 3, 'Murilo SIlva', '20252', '123456', '$2y$10$zZRLD1o0v/yp4M84x4fwV.RBDumQt7UxPIe99nx3u9cAzVmJs6YvK', '2025-10-12 12:21:55');
 
@@ -243,7 +251,7 @@ ALTER TABLE `tbl_anamnese`
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_exame_fisico`
@@ -255,13 +263,13 @@ ALTER TABLE `tbl_exame_fisico`
 -- AUTO_INCREMENT de tabela `tbl_paciente`
 --
 ALTER TABLE `tbl_paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_prontuario`
 --
 ALTER TABLE `tbl_prontuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_tipo_usuario`

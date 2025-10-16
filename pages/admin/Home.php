@@ -104,14 +104,14 @@ include('../../protect.php');
     <main>
         <div class="profile">
             <img src="../../img/imageHomeUser.png" alt="Usuário">
-            <h1>Seja Bem-vindo!</h1>
+            <h1>Seja Bem-vindo(a) <?php echo $_SESSION['nome'] ?>!</h1>
         </div>
 
         <div class="cards">
-            <a href="cadastro/formulário.php" class="card">Cadastrar Prontuário</a>
-            <a href="#" class="card">Consultar Prontuário</a>
             <a href="cadastro/cadastro-usuario.php" class="card">Cadastrar Usuário</a>
+            <a href="cadastro/formulário.php" class="card">Cadastrar Prontuário</a>
             <a href="cadastro/anamnese.php" class="card">ANAMNESE</a>
+            <a href="Evolucao.php" class="card">Evolução</a>
         </div>
     </main>
 
