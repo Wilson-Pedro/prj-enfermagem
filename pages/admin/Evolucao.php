@@ -1,10 +1,9 @@
 <?php
 include('../../protect.php');
 
-$sql = "SELECT pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento 
-            FROM tbl_prontuario pr 
-            JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
-            ORDER BY pr.registro DESC;";
+include('../../db/conexao.php');
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ?>
 <!DOCTYPE html>
 
@@ -127,38 +126,48 @@ $sql = "SELECT pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nom
 
         <div class="card-list">
 
-            <div class="card">
-                <h2>Prontuário Nº 001</h2>
-                <div class="info">
-                    <span><strong>Nome:</strong> João Silva</span>
-                    <span><strong>CPF:</strong> 123.456.789-00</span>
-                    <span><strong>Data de Nascimento:</strong> 12/03/1990</span>
-                    <span><strong>Nome da Mãe:</strong> Maria Silva</span>
-                    <span><strong>Data de Atendimento:</strong> 10/10/2025</span>
-                </div>
-            </div>
+            <?php
+                try {
 
-            <div class="card">
-                <h2>Prontuário Nº 002</h2>
-                <div class="info">
-                    <span><strong>Nome:</strong> Ana Costa</span>
-                    <span><strong>CPF:</strong> 987.654.321-00</span>
-                    <span><strong>Data de Nascimento:</strong> 22/08/1985</span>
-                    <span><strong>Nome da Mãe:</strong> Helena Costa</span>
-                    <span><strong>Data de Atendimento:</strong> 05/10/2025</span>
-                </div>
-            </div>
+                    $sql = "SELECT pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento 
+                    FROM tbl_prontuario pr 
+                    JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
+                    ORDER BY pr.registro DESC;";
 
-            <div class="card">
-                <h2>Prontuário Nº 003</h2>
-                <div class="info">
-                    <span><strong>Nome:</strong> Pedro Oliveira</span>
-                    <span><strong>CPF:</strong> 456.789.123-00</span>
-                    <span><strong>Data de Nascimento:</strong> 30/01/1995</span>
-                    <span><strong>Nome da Mãe:</strong> Luciana Oliveira</span>
-                    <span><strong>Data de Atendimento:</strong> 12/10/2025</span>
+                    $result = $mysqli->query($sql);
+
+                    if($result->num_rows === 0) {
+                        echo "<p style='text-align:center; color:gray;'>Nenhum prontuário cadastrado.</p>";
+                    } else {
+
+                    while($row = $result->fetch_assoc()) {
+                        $numero = htmlspecialchars($row['numero_prontuario']);
+                        $cpf = htmlspecialchars($row['cpf']);
+                        $data_nascimento = htmlspecialchars($row['data_nascimento']);
+                        $nome_mae = htmlspecialchars($row['nome_mae']);
+                        $data_atendimento = htmlspecialchars($row['data_atendimento']);
+            ?>
+
+                <div class="card">
+                    <h2>Prontuário Nº <?php echo $row['numero_prontuario'] ?></h2>
+                    <div class="info">
+                        <span><strong>Nome:</strong> <?php echo $numero ?></span>
+                        <span><strong>CPF:</strong> <?php echo $cpf ?></span>
+                        <span><strong>Data de Nascimento:</strong> <?php echo $data_nascimento ?></span>
+                        <span><strong>Nome da Mãe:</strong> <?php echo $nome_mae ?></span>
+                        <span><strong>Data de Atendimento:</strong> <?php echo $data_atendimento ?></span>
+                    </div>
                 </div>
-            </div>
+
+            <?php 
+                        }
+                    }
+                } catch(Exception $e) {
+                    echo "<p style='color:red; text-align:center;'>Erro ao carregar os prontuários.</p>";
+                    error_log("Error ao listar prontuários " . $e->getMessage());
+                }
+            ?>
+
         </div>
     </main>
 

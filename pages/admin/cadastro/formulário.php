@@ -110,7 +110,7 @@
             </div>
             <div class="form-group">
                 <label for="nascimento">Data de Nascimento</label>
-                <input type="date" id="nascimento"name="data_nascimento" placeholder="Dia / Mês / Ano" required>
+                <input type="date" id="nascimento" name="data_nascimento" placeholder="Dia / Mês / Ano" required>
             </div>
         </div>
 
