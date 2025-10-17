@@ -129,7 +129,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             <?php
                 try {
 
-                    $sql = "SELECT pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento 
+                    $sql = "SELECT pr.id, pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento 
                     FROM tbl_prontuario pr 
                     JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
                     ORDER BY pr.registro DESC;";
@@ -141,23 +141,26 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                     } else {
 
                     while($row = $result->fetch_assoc()) {
+                        $id = htmlspecialchars($row['id']);
                         $numero = htmlspecialchars($row['numero_prontuario']);
+                        $nome = htmlspecialchars($row['nome']);
                         $cpf = htmlspecialchars($row['cpf']);
-                        $data_nascimento = htmlspecialchars($row['data_nascimento']);
+                        $data_nascimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_nascimento'])));
                         $nome_mae = htmlspecialchars($row['nome_mae']);
-                        $data_atendimento = htmlspecialchars($row['data_atendimento']);
+                        $data_atendimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_atendimento'])));
             ?>
-
-                <div class="card">
-                    <h2>Prontuário Nº <?php echo $row['numero_prontuario'] ?></h2>
-                    <div class="info">
-                        <span><strong>Nome:</strong> <?php echo $numero ?></span>
-                        <span><strong>CPF:</strong> <?php echo $cpf ?></span>
-                        <span><strong>Data de Nascimento:</strong> <?php echo $data_nascimento ?></span>
-                        <span><strong>Nome da Mãe:</strong> <?php echo $nome_mae ?></span>
-                        <span><strong>Data de Atendimento:</strong> <?php echo $data_atendimento ?></span>
+                <a href="edit/formularioEdit.php?id=<?php echo $id ?>">
+                    <div class="card">
+                        <h2>Prontuário Nº <?php echo $row['numero_prontuario'] ?></h2>
+                        <div class="info">
+                            <span><strong>Nome:</strong> <?php echo $nome ?></span>
+                            <span><strong>CPF:</strong> <?php echo $cpf ?></span>
+                            <span><strong>Data de Nascimento:</strong> <?php echo $data_nascimento ?></span>
+                            <span><strong>Nome da Mãe:</strong> <?php echo $nome_mae ?></span>
+                            <span><strong>Data de Atendimento:</strong> <?php echo $data_atendimento ?></span>
+                        </div>
                     </div>
-                </div>
+                </a>
 
             <?php 
                         }

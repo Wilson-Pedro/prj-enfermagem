@@ -1,0 +1,186 @@
+<?php
+    include('../../../protect.php');
+    include('../../../db/conexao.php');
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $mysqli->set_charset("utf8");
+
+
+    $id = $_GET['id'] ?? '';
+    $id = trim($id);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../../css/formulario.css">
+    <title>Editar Formulário</title>
+    <style>
+        form a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botão de Voltar -->
+    <div class="back-btn">
+        <a href="../Evolucao.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+    </div>
+
+    <form method="post" class="container">
+        <h2>Formulário</h2>
+
+        <?php 
+            try {
+                $stmt_sql = $mysqli->prepare("SELECT pr.id, pr.numero_prontuario, pr.data_atendimento , pa.nome, pa.cpf, pa.data_nascimento, 
+                pa.rg, pa.ssp, pa.nome_mae, pa.mae_nao_consta,
+                pa.telefone, pa.cartao_sus, en.cep, en.rua, en.bairro, en.cidade, en.complemento
+                FROM tbl_prontuario pr 
+                JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
+                JOIN tbl_endereco en ON en.id = pa.id_endereco
+                WHERE pr.id = ?
+                LIMIT 1;");
+                
+                $stmt_sql->bind_param("i", $id);
+                $stmt_sql->execute();
+                $result = $stmt_sql->get_result();
+
+                if($result->num_rows == 0) {
+                    echo "<p style='text-align:center; color:gray;'>Prontuário não encontrado.</p>";
+                } else {
+                    while($row = $result->fetch_assoc()) {
+                            $id = htmlspecialchars($row['id']);
+                            $numero_prontuario = htmlspecialchars($row['numero_prontuario']);
+                            $data_atendimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_atendimento'])));
+                            $nome = htmlspecialchars($row['nome']);
+                            $cpf = htmlspecialchars($row['cpf']);
+                            $data_nascimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_nascimento'])));
+                            $rg = htmlspecialchars($row['rg']);
+                            $ssp = htmlspecialchars($row['ssp']);
+                            $nome_mae = htmlspecialchars($row['nome_mae']);
+                            $mae_nao_consta = htmlspecialchars($row['mae_nao_consta']);
+                            $telefone = htmlspecialchars($row['telefone']);
+                            $cartao_sus = htmlspecialchars($row['cartao_sus']);
+                            $cep = htmlspecialchars($row['cep']);
+                            $rua = htmlspecialchars($row['rua']);
+                            $bairro = htmlspecialchars($row['bairro']);
+                            $cidade = htmlspecialchars($row['cidade']);
+                            $complemento = htmlspecialchars($row['complemento']);
+        ?>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="prontuario">Número do Prontuário</label>
+                <input type="number" id="prontuario" value="<?php echo $numero_prontuario ?>" name="numero_prontuario" placeholder="Nº Prontuário" required>
+            </div>
+            <div class="form-group">
+                <label for="atendimento">Data do Atendimento</label>
+                <input type="date" id="atendimento" value="<?php echo date("Y-m-d", strtotime($data_atendimento)) ?>" name="data_atendimento" placeholder="Dia / Mês / Ano" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Nome do Paciente</label>
+            <input type="text" id="nome" value="<?php echo $nome ?>" name="nome" placeholder="Nome" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" value="<?php echo $cpf ?>" name="cpf" placeholder="CPF" required>
+            </div>
+            <div class="form-group">
+                <label for="nascimento">Data de Nascimento</label>
+                <input type="date" id="nascimento" value="<?php echo date('Y-m-d', strtotime($data_nascimento)) ?>" name="data_nascimento" placeholder="Dia / Mês / Ano" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="rg">RG</label>
+                <input type="text" id="rg" value="<?php echo $rg ?>" name="rg" placeholder="RG" required>
+            </div>
+            <div class="form-group">
+                <label for="ssp">SSP</label>
+                <input type="text" id="ssp" value="<?php echo $ssp ?>" name="ssp" placeholder="SSP" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="nome-mae">Nome da Mãe</label>
+                <input type="text" id="nome-mae" value="<?php echo $nome_mae ?>" name="nome_mae" placeholder="Nome da Mãe">
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="text" id="telefone" value="<?php echo $telefone ?>" name="telefone" placeholder="Telefone" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="checkbox-group">
+                <input type="checkbox" id="nao-consta-mae" value="<?php echo $mae_nao_consta ?>" name="nome_mae_consta"  <?php echo ($mae_nao_consta == 1) ? 'checked': ""; ?>>
+                <label for="nao-consta-mae">Não Consta</label>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="sus">Cartão do SUS</label>
+            <input type="text" id="sus" value="<?php echo $cartao_sus ?>" name="cartao_sus" placeholder="SUS">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="cep">CEP</label>
+                <input type="text" id="cep" value="<?php echo $cep ?>" name="cep" placeholder="cep" required>
+            </div>
+            <div class="form-group">
+                <label for="rua">Rua</label>
+                <input type="text" id="rua" value="<?php echo $rua ?>" name="rua" placeholder="Rua" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label for="rua">Bairro</label>
+                <input type="text" id="bairro" value="<?php echo $bairro ?>" name="bairro" placeholder="bairro" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" value="<?php echo $cidade ?>" name="cidade" placeholder="Cidade" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label for="cidade">Complemento</label>
+                <textarea rows="5" cols="30" id="complemento" value="<?php echo $complemento ?>" name="complemento" placeholder="complemento"></textarea>
+            </div>
+        </div>
+
+        <!-- <div class="checkbox-group">
+            <input type="checkbox" id="concordo"  name="concordo" required>
+            <label for="concordo">Concordo com o uso dos dados apresentados acima, conforme os termos destacados.</label>
+        </div> -->
+
+        <?php
+                    }
+                }
+            } catch(Exception $e) {
+                echo "<p style='color:red; text-align:center;'>Erro ao buscar formulário.</p>";
+                error_log("Error ao bsucar formulário. " . $e->getMessage());
+            }
+        ?>
+
+        <div class="submit-btn">
+            <button type="submit" name="atualizar">Atualizar</button>
+        </div>
+    </form>
+
+</body>
+</html>
