@@ -108,6 +108,10 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         font-size: 1.8rem;
         text-decoration: none;
     }
+
+    .card-link {
+        text-decoration: none;
+    }
 </style>
 
 </head>
@@ -149,7 +153,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                         $nome_mae = htmlspecialchars($row['nome_mae']);
                         $data_atendimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_atendimento'])));
             ?>
-                <a href="edit/formularioEdit.php?id=<?php echo $id ?>">
+                <a href="edit/formularioEdit.php?id=<?php echo $id ?>" class="card-link">
                     <div class="card">
                         <h2>Prontuário Nº <?php echo $row['numero_prontuario'] ?></h2>
                         <div class="info">

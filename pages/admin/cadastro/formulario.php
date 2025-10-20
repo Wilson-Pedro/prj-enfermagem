@@ -62,7 +62,7 @@
             header('Location: cadastro-sucesso.php');
 
         } catch(Exception $e) {
-            echo "Error " . $e;
+            echo "Error " . $e->getMessage();
 
         }
     }

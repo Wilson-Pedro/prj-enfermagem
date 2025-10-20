@@ -7,6 +7,72 @@
 
     $id = $_GET['id'] ?? '';
     $id = trim($id);
+
+    if(isset($_POST['atualizar'])) {
+
+        try {
+        
+            //PEGAR ID DO ENDERECO
+            $stmt_id_endereco = $mysqli->prepare("
+                SELECT pr.id_paciente AS paciente_id, pa.id_endereco AS endereco_id 
+                FROM tbl_prontuario pr 
+                JOIN tbl_paciente pa ON pr.id_paciente = pa.id 
+                WHERE pr.id = ?;
+            ");
+            $stmt_id_endereco->bind_param("i", $id);
+            $stmt_id_endereco->execute();
+            $result = $stmt_id_endereco->get_result();
+            $id_endereco = null;
+            $id_paciente = null;
+
+            if($row = $result->fetch_assoc()) {
+                $id_endereco = $row['endereco_id'];
+                $id_paciente = $row['paciente_id'];
+            }
+
+            //DADOS PARA TBL_PACIENTE
+            $rg_update = $_POST['rg'];
+            $cpf_update = $_POST['cpf'];
+            $ssp_update = $_POST['ssp'];
+            $nome_update = $_POST['nome'];
+            $telefone_update = $_POST['telefone'];
+            $nome_mae_update = $_POST['nome_mae'];
+            $cartao_sus_update = $_POST['cartao_sus'];
+            $nome_mae_consta_update = empty($_POST['nome_mae_consta'])  ? 1 : 0;
+
+            $data_nascimento_update = $_POST['data_nascimento'];
+
+            //DADOS PARA TBL_ENDERECO
+            $cep_update = $_POST['cep'];
+            $rua_update = $_POST['rua'];
+            $bairro_update = $_POST['bairro'];
+            $cidade_update = $_POST['cidade'];
+            $complemento_update = $_POST['complemento'];
+
+
+            $stmt_endereco_update = $mysqli->prepare("UPDATE tbl_endereco SET cep = ?, rua = ?, bairro = ?, cidade = ?, complemento = ? 
+            WHERE id = ?");
+            $stmt_endereco_update->bind_param("sssssi", $cep_update, $rua_update, $bairro_update, $cidade_update, $complemento_update, $id_endereco);
+            $stmt_endereco_update->execute();
+            $stmt_endereco_update->close();
+
+            $sql_update_paciente = "UPDATE tbl_paciente SET nome = ?,data_nascimento = ?,
+                        nome_mae = ?,mae_nao_consta = ?, cpf = ?,
+                        rg = ?,ssp = ?,
+                        telefone = ?, cartao_sus = ?
+                        WHERE id = ?";
+
+            $stmt_paciente_update = $mysqli->prepare($sql_update_paciente);
+            $stmt_paciente_update->bind_param("sssisssssi", $nome_update, $data_nascimento_update, $nome_mae_update, $nome_mae_consta_update,
+                                                            $cpf_update, $rg_update, $ssp_update, $telefone_update, $cartao_sus_update, $id_paciente);
+
+            $stmt_paciente_update->execute();
+            $stmt_paciente_update->close();
+
+        } catch(Exception $e) {
+            echo "Error ao atualizar prontuário" . $e->getMessage();
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +84,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../../css/formulario.css">
     <title>Editar Formulário</title>
-    <style>
-        form a {
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
 
@@ -36,9 +97,10 @@
 
         <?php 
             try {
-                $stmt_sql = $mysqli->prepare("SELECT pr.id, pr.numero_prontuario, pr.data_atendimento , pa.nome, pa.cpf, pa.data_nascimento, 
+                $stmt_sql = $mysqli->prepare("SELECT pr.id AS prontuarioId, pr.numero_prontuario, pr.data_atendimento , pa.nome, pa.cpf, pa.data_nascimento, 
                 pa.rg, pa.ssp, pa.nome_mae, pa.mae_nao_consta,
-                pa.telefone, pa.cartao_sus, en.cep, en.rua, en.bairro, en.cidade, en.complemento
+                pa.telefone, pa.cartao_sus, 
+                en.id AS enderecoId, en.cep, en.rua, en.bairro, en.cidade, en.complemento
                 FROM tbl_prontuario pr 
                 JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
                 JOIN tbl_endereco en ON en.id = pa.id_endereco
@@ -53,12 +115,13 @@
                     echo "<p style='text-align:center; color:gray;'>Prontuário não encontrado.</p>";
                 } else {
                     while($row = $result->fetch_assoc()) {
-                            $id = htmlspecialchars($row['id']);
+                            $prontuarioId = htmlspecialchars($row['prontuarioId']);
+                            $enderecoId = htmlspecialchars($row['enderecoId']);
                             $numero_prontuario = htmlspecialchars($row['numero_prontuario']);
-                            $data_atendimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_atendimento'])));
+                            $data_atendimento = htmlspecialchars($row['data_atendimento']);
                             $nome = htmlspecialchars($row['nome']);
                             $cpf = htmlspecialchars($row['cpf']);
-                            $data_nascimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_nascimento'])));
+                            $data_nascimento = htmlspecialchars($row['data_nascimento']);
                             $rg = htmlspecialchars($row['rg']);
                             $ssp = htmlspecialchars($row['ssp']);
                             $nome_mae = htmlspecialchars($row['nome_mae']);
@@ -75,11 +138,11 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="prontuario">Número do Prontuário</label>
-                <input type="number" id="prontuario" value="<?php echo $numero_prontuario ?>" name="numero_prontuario" placeholder="Nº Prontuário" required>
+                <input type="number" id="numero_prontuario" value="<?php echo $numero_prontuario ?>" name="numero_prontuario" placeholder="Nº Prontuário" disabled>
             </div>
             <div class="form-group">
                 <label for="atendimento">Data do Atendimento</label>
-                <input type="date" id="atendimento" value="<?php echo date("Y-m-d", strtotime($data_atendimento)) ?>" name="data_atendimento" placeholder="Dia / Mês / Ano" required>
+                <input type="date" id="data_atendimento" value="<?php echo date("Y-m-d", strtotime($data_atendimento)) ?>" name="data_atendimento" placeholder="Dia / Mês / Ano" disabled>
             </div>
         </div>
 
@@ -123,7 +186,7 @@
 
         <div class="form-row">
             <div class="checkbox-group">
-                <input type="checkbox" id="nao-consta-mae" value="<?php echo $mae_nao_consta ?>" name="nome_mae_consta"  <?php echo ($mae_nao_consta == 1) ? 'checked': ""; ?>>
+                <input type="checkbox" id="nao-consta-mae" name="nome_mae_consta"  <?php echo ($mae_nao_consta == 1) ? 'checked': ""; ?>>
                 <label for="nao-consta-mae">Não Consta</label>
             </div>
         </div>
@@ -159,14 +222,9 @@
         <div class="form-group">
             <div class="form-group">
                 <label for="cidade">Complemento</label>
-                <textarea rows="5" cols="30" id="complemento" value="<?php echo $complemento ?>" name="complemento" placeholder="complemento"></textarea>
+                <textarea rows="5" cols="30" id="complemento" name="complemento" placeholder="complemento"><?php echo htmlspecialchars($complemento) ?></textarea>
             </div>
         </div>
-
-        <!-- <div class="checkbox-group">
-            <input type="checkbox" id="concordo"  name="concordo" required>
-            <label for="concordo">Concordo com o uso dos dados apresentados acima, conforme os termos destacados.</label>
-        </div> -->
 
         <?php
                     }
