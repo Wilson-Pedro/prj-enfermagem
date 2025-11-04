@@ -4,6 +4,10 @@ include('../../protect.php');
 include('../../db/conexao.php');
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+$id_paciente = $_GET['id'] ?? '';
+$id_paciente = trim($id_paciente);
+
 ?>
 <!DOCTYPE html>
 
@@ -11,7 +15,8 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Prontuários | Estácio</title>
+    <title>Evoluções</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
 <style>
@@ -67,7 +72,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         padding: 20px;
         box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
         transition: all 0.3s ease;
-        cursor: pointer;
+
     }
 
     .card:hover {
@@ -96,6 +101,10 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         color: #0099DA;
     }
 
+    .info button {
+        margin-top: 2%;
+    }
+
     footer {
         text-align: center;
         padding: 20px;
@@ -112,12 +121,19 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     .card-link {
         text-decoration: none;
     }
+
+    .divBtn {
+        margin: 3%;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+    }
 </style>
 
 </head>
 <body>
     <header>
-        <a href="Home.php" class="voltar" title="Voltar">
+        <a href="prontuarios.php?id=<?php echo $id_paciente ?>" class="voltar" title="Voltar">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </a>
         <a href="Home.php" title="logo estácio">
@@ -126,56 +142,69 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     </header>
 
     <main>
-        <h1>Lista de Prontuários</h1>
+        <h1>Evoluções</h1>
 
-        <div class="card-list">
+        <div class="divBtn">
+            <a href="cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>">
+                <button type="button" class="btn btn-success">Fazer Evolução</button>
+            </a>
+        </div>
 
+            <table  class="table">
             <?php
                 try {
 
-                    $sql = "SELECT pr.id, pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento 
-                    FROM tbl_prontuario pr 
-                    JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
-                    ORDER BY pr.registro DESC;";
+                    $sql = "SELECT ev.id as id_evolucao, ev.data_atendimento, ev.pressao, ev.glicemia, ev.observacao  
+                            FROM tbl_evolucao ev 
+                            JOIN tbl_paciente pa ON pa.id = ev.id_paciente 
+                            WHERE pa.id = $id_paciente
+                            ORDER BY ev.id DESC;";
 
                     $result = $mysqli->query($sql);
 
+
                     if($result->num_rows === 0) {
-                        echo "<p style='text-align:center; color:gray;'>Nenhum prontuário cadastrado.</p>";
+                        echo "<p style='text-align:center; color:gray;'>Nenhuma evolução cadastrada.</p>";
                     } else {
 
+                ?>
+
+                        <thead class="table-dark">
+                            <tr>
+                            <th scope="col">Data da evolução</th>
+                            <th scope="col">Pressão</th>
+                            <th scope="col">Glicemia</th>
+                            <th scope="col">Observação</th>
+                            </tr>
+                        </thead>
+
+            <?php
+
                     while($row = $result->fetch_assoc()) {
-                        $id = htmlspecialchars($row['id']);
-                        $numero = htmlspecialchars($row['numero_prontuario']);
-                        $nome = htmlspecialchars($row['nome']);
-                        $cpf = htmlspecialchars($row['cpf']);
-                        $data_nascimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_nascimento'])));
-                        $nome_mae = htmlspecialchars($row['nome_mae']);
                         $data_atendimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_atendimento'])));
+                        $pressao = htmlspecialchars($row['pressao']);
+                        $glicemia = htmlspecialchars($row['glicemia']);
+                        $observacao = htmlspecialchars($row['observacao']);
             ?>
-                <a href="edit/formularioEdit.php?id=<?php echo $id ?>" class="card-link">
-                    <div class="card">
-                        <h2>Prontuário Nº <?php echo $row['numero_prontuario'] ?></h2>
-                        <div class="info">
-                            <span><strong>Nome:</strong> <?php echo $nome ?></span>
-                            <span><strong>CPF:</strong> <?php echo $cpf ?></span>
-                            <span><strong>Data de Nascimento:</strong> <?php echo $data_nascimento ?></span>
-                            <span><strong>Nome da Mãe:</strong> <?php echo $nome_mae ?></span>
-                            <span><strong>Data de Atendimento:</strong> <?php echo $data_atendimento ?></span>
-                        </div>
-                    </div>
-                </a>
+                        <tbody>
+                            <tr>
+                            <td><?php echo $data_atendimento ?></td>
+                            <td><?php echo $pressao ?></td>
+                            <td><?php echo $glicemia ?></td>
+                            <td><?php echo $observacao ?></td>
+                            </tr>
+                        </tbody>
 
             <?php 
                         }
                     }
                 } catch(Exception $e) {
-                    echo "<p style='color:red; text-align:center;'>Erro ao carregar os prontuários.</p>";
+                    echo "<p style='color:grey; text-align:center;'>Nehnhuma evolução encontrada.</p>";
                     error_log("Error ao listar prontuários " . $e->getMessage());
                 }
             ?>
+            </table>
 
-        </div>
     </main>
 
     <!-- Rodapé -->

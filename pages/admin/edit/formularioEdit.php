@@ -12,7 +12,7 @@
 
         try {
         
-            //PEGAR ID DO ENDERECO
+            //PEGAR ID DO ENDERECO E ID DO PACIENTE
             $stmt_id_endereco = $mysqli->prepare("
                 SELECT pr.id_paciente AS paciente_id, pa.id_endereco AS endereco_id 
                 FROM tbl_prontuario pr 
@@ -84,16 +84,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../../css/formulario.css">
     <title>Editar Formulário</title>
+    <style>
+        body {
+            background: #146c8f;
+            background: linear-gradient(180deg,rgba(20, 108, 143, 1) 0%, rgba(59, 157, 196, 1) 100%);  
+        }
+    </style>
 </head>
 <body>
 
     <!-- Botão de Voltar -->
     <div class="back-btn">
-        <a href="../Evolucao.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+        <a href="../prontuarios.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
     <form method="post" class="container">
-        <h2>Formulário</h2>
+        <h2>Editar Formulário</h2>
 
         <?php 
             try {

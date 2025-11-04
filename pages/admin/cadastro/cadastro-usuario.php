@@ -45,7 +45,7 @@
     <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- <link rel="stylesheet" href="../css/anamnese.css"> -->
-    <title>ANAMNESE</title>
+    <title>Cadastrar Usuário</title>
     <style>
 
         * {
@@ -56,7 +56,8 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(180deg, rgb(230, 82, 107), rgb(234, 126, 144));
+            background: #146c8f;
+            background: linear-gradient(180deg,rgba(20, 108, 143, 1) 0%, rgba(59, 157, 196, 1) 100%);  
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -206,7 +207,7 @@
 
     <form method="post" class="container">
         <div class="formContainer">
-            <h2>Anamnese</h2>
+            <h2>Cadastrar Usuário</h2>
             <div class="form-group">
                 <label for="motivo-consulta">Nome Completo</label>
                 <input type="text" id="nome-completo" name="nome_completo" placeholder="Nome Completo" required>

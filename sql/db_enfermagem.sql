@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/10/2025 às 02:20
+-- Tempo de geração: 03/11/2025 às 14:28
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -72,7 +72,31 @@ CREATE TABLE `tbl_endereco` (
 --
 
 INSERT INTO `tbl_endereco` (`id`, `cep`, `rua`, `bairro`, `cidade`, `complemento`) VALUES
-(2, '68971970', 'Rua da Luz', 'Goiabas', 'Belo Horizonte', '');
+(9, '68971970', 'Rua da Paz', 'Goiabas', 'Belo Horizonte', 'perto da praça');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tbl_evolucao`
+--
+
+CREATE TABLE `tbl_evolucao` (
+  `id` int(11) NOT NULL,
+  `id_paciente` int(11) NOT NULL,
+  `data_atendimento` date NOT NULL,
+  `pressao` varchar(50) NOT NULL,
+  `glicemia` varchar(50) NOT NULL,
+  `observacao` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbl_evolucao`
+--
+
+INSERT INTO `tbl_evolucao` (`id`, `id_paciente`, `data_atendimento`, `pressao`, `glicemia`, `observacao`) VALUES
+(20, 9, '2025-11-02', '90', '85', 'Situação normalizou'),
+(22, 9, '2025-11-02', '90', '85', 'Pressão abaixou'),
+(23, 9, '2025-11-03', '89', '90', 'Glicemia aumentou');
 
 -- --------------------------------------------------------
 
@@ -102,7 +126,7 @@ CREATE TABLE `tbl_paciente` (
   `nome` varchar(255) NOT NULL,
   `data_nascimento` date NOT NULL,
   `nome_mae` varchar(255) NOT NULL,
-  `nome_mae_consta` tinyint(1) NOT NULL,
+  `mae_nao_consta` tinyint(1) NOT NULL,
   `cpf` varchar(14) NOT NULL,
   `rg` varchar(50) NOT NULL,
   `ssp` varchar(10) NOT NULL,
@@ -116,8 +140,8 @@ CREATE TABLE `tbl_paciente` (
 -- Despejando dados para a tabela `tbl_paciente`
 --
 
-INSERT INTO `tbl_paciente` (`id`, `nome`, `data_nascimento`, `nome_mae`, `nome_mae_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`, `registro`) VALUES
-(2, 'Rafaela', '1999-10-14', 'Julia', 0, '34276512387', '45646546', 'MA', '(11) 98881-2345', '', 2, '2025-10-15 23:53:43');
+INSERT INTO `tbl_paciente` (`id`, `nome`, `data_nascimento`, `nome_mae`, `mae_nao_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`, `registro`) VALUES
+(9, 'Rafael Silva', '1998-10-16', 'Julia', 1, '1234567', '45646546', 'MA', '98986117230', '2342343240', 9, '2025-10-17 00:28:46');
 
 -- --------------------------------------------------------
 
@@ -138,7 +162,7 @@ CREATE TABLE `tbl_prontuario` (
 --
 
 INSERT INTO `tbl_prontuario` (`id`, `numero_prontuario`, `data_atendimento`, `id_paciente`, `registro`) VALUES
-(1, 1234, '2025-10-15', 2, '2025-10-15 23:53:44');
+(8, 3, '2025-10-17', 9, '2025-10-17 00:28:46');
 
 -- --------------------------------------------------------
 
@@ -203,6 +227,13 @@ ALTER TABLE `tbl_endereco`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `tbl_evolucao`
+--
+ALTER TABLE `tbl_evolucao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_evolucao_paciente` (`id_paciente`);
+
+--
 -- Índices de tabela `tbl_exame_fisico`
 --
 ALTER TABLE `tbl_exame_fisico`
@@ -251,7 +282,13 @@ ALTER TABLE `tbl_anamnese`
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de tabela `tbl_evolucao`
+--
+ALTER TABLE `tbl_evolucao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_exame_fisico`
@@ -263,13 +300,13 @@ ALTER TABLE `tbl_exame_fisico`
 -- AUTO_INCREMENT de tabela `tbl_paciente`
 --
 ALTER TABLE `tbl_paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_prontuario`
 --
 ALTER TABLE `tbl_prontuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_tipo_usuario`
@@ -292,6 +329,12 @@ ALTER TABLE `tbl_users`
 --
 ALTER TABLE `tbl_anamnese`
   ADD CONSTRAINT `fk_anamnese_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`);
+
+--
+-- Restrições para tabelas `tbl_evolucao`
+--
+ALTER TABLE `tbl_evolucao`
+  ADD CONSTRAINT `fk_evolucao_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`);
 
 --
 -- Restrições para tabelas `tbl_exame_fisico`

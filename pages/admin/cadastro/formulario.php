@@ -77,6 +77,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../../css/formulario.css">
     <title>Criar Formulário</title>
+    <style>
+        body {
+            background: #146c8f;
+            background: linear-gradient(180deg,rgba(20, 108, 143, 1) 0%, rgba(59, 157, 196, 1) 100%);  
+        }
+    </style>
 </head>
 <body>
 

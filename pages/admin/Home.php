@@ -111,7 +111,7 @@ include('../../protect.php');
             <a href="cadastro/cadastro-usuario.php" class="card">Cadastrar Usuário</a>
             <a href="cadastro/formulario.php" class="card">Cadastrar Prontuário</a>
             <a href="cadastro/anamnese.php" class="card">ANAMNESE</a>
-            <a href="Evolucao.php" class="card">Evolução</a>
+            <a href="prontuarios.php" class="card">Evolução</a>
         </div>
     </main>
 
