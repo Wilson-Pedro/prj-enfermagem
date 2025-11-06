@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/11/2025 às 14:28
+-- Tempo de geração: 05/11/2025 às 01:47
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -72,7 +72,11 @@ CREATE TABLE `tbl_endereco` (
 --
 
 INSERT INTO `tbl_endereco` (`id`, `cep`, `rua`, `bairro`, `cidade`, `complemento`) VALUES
-(9, '68971970', 'Rua da Paz', 'Goiabas', 'Belo Horizonte', 'perto da praça');
+(9, '68971970', 'Rua da Paz', 'Goiabas', 'Belo Horizonte', 'perto da praça'),
+(10, '50012112', 'Rua da Maçã', 'Laranjeiras', 'Cidade da paz', ''),
+(11, '50012112', 'Rua da Maçã', 'Laranjeiras', 'Cidade da paz', ''),
+(12, '50012112', 'Rua da Maçã', 'Laranjeiras', 'Cidade da paz', ''),
+(13, '36612101', 'Rua de Silva Moraes', 'Laranjeiras', 'Cidade da paz', '');
 
 -- --------------------------------------------------------
 
@@ -96,7 +100,8 @@ CREATE TABLE `tbl_evolucao` (
 INSERT INTO `tbl_evolucao` (`id`, `id_paciente`, `data_atendimento`, `pressao`, `glicemia`, `observacao`) VALUES
 (20, 9, '2025-11-02', '90', '85', 'Situação normalizou'),
 (22, 9, '2025-11-02', '90', '85', 'Pressão abaixou'),
-(23, 9, '2025-11-03', '89', '90', 'Glicemia aumentou');
+(23, 9, '2025-11-03', '89', '90', 'Glicemia aumentou'),
+(38, 11, '2025-11-04', '89', '88', 'Situação normalizou');
 
 -- --------------------------------------------------------
 
@@ -141,7 +146,9 @@ CREATE TABLE `tbl_paciente` (
 --
 
 INSERT INTO `tbl_paciente` (`id`, `nome`, `data_nascimento`, `nome_mae`, `mae_nao_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`, `registro`) VALUES
-(9, 'Rafael Silva', '1998-10-16', 'Julia', 1, '1234567', '45646546', 'MA', '98986117230', '2342343240', 9, '2025-10-17 00:28:46');
+(9, 'Rafael Silva', '1998-10-16', 'Julia', 1, '1234567', '45646546', 'MA', '98986117230', '2342343240', 9, '2025-10-17 00:28:46'),
+(10, 'Marcelo Abreu', '1999-11-06', 'Carla', 0, '785.006.420-84', '28.850.458-6', 'MA', '99865212201', '', 12, '2025-11-05 00:11:03'),
+(11, 'Helena Carla', '1998-10-28', 'Lara', 0, '780.616.422-81', '28.850.128-2', 'MA', '(88) 98231-2345', '', 13, '2025-11-05 00:31:26');
 
 -- --------------------------------------------------------
 
@@ -162,7 +169,9 @@ CREATE TABLE `tbl_prontuario` (
 --
 
 INSERT INTO `tbl_prontuario` (`id`, `numero_prontuario`, `data_atendimento`, `id_paciente`, `registro`) VALUES
-(8, 3, '2025-10-17', 9, '2025-10-17 00:28:46');
+(8, 3, '2025-10-17', 9, '2025-10-17 00:28:46'),
+(9, 4, '2025-11-04', 10, '2025-11-05 00:11:03'),
+(10, 5, '2025-11-04', 11, '2025-11-05 00:31:26');
 
 -- --------------------------------------------------------
 
@@ -282,13 +291,13 @@ ALTER TABLE `tbl_anamnese`
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_evolucao`
 --
 ALTER TABLE `tbl_evolucao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_exame_fisico`
@@ -300,13 +309,13 @@ ALTER TABLE `tbl_exame_fisico`
 -- AUTO_INCREMENT de tabela `tbl_paciente`
 --
 ALTER TABLE `tbl_paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_prontuario`
 --
 ALTER TABLE `tbl_prontuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_tipo_usuario`

@@ -4,6 +4,14 @@ include('../../protect.php');
 include('../../db/conexao.php');
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+$where = "";
+$busca = isset($_GET['busca']) ? $_GET['busca'] : '';
+
+if(!empty($busca)) {
+    $where = "WHERE pa.nome LIKE '%" . mysqli_real_escape_string($mysqli, $busca) . "%'";
+}
+
 ?>
 <!DOCTYPE html>
 
@@ -58,7 +66,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     .card-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
         gap: 25px;
     }
 
@@ -68,7 +76,6 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         padding: 20px;
         box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
         transition: all 0.3s ease;
-
     }
 
     .card:hover {
@@ -154,9 +161,9 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     <main>
         <h1>Lista de Prontuários</h1>
-        <form action="/buscar" method="get">
-            <input type="text" name="q" placeholder="Pesquisar..." class="barra-busca">
-            <button type="button">
+        <form action="" method="GET">
+            <input type="text" name="busca" placeholder="Pesquisar..." class="barra-busca" value="<?php htmlspecialchars($busca); ?>">
+            <button type="submit">
                 <i class="bi bi-search"></i>
             </button>
         </form> <br>
@@ -169,6 +176,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                     $sql = "SELECT pr.id, pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento, pr.id_paciente  
                     FROM tbl_prontuario pr 
                     JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
+                    $where
                     ORDER BY pr.registro DESC;";
 
                     $result = $mysqli->query($sql);
@@ -208,6 +216,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                                 <button type="button" class="btn btn-primary">Ver Evoluções</button>
                             </a>
                         </div>
+                    </div>
 
             <?php 
                         }

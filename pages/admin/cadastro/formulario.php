@@ -23,7 +23,7 @@
         $telefone = $_POST['telefone'];
         $nome_mae = $_POST['nome_mae'];
         $cartao_sus = $_POST['cartao_sus'];
-        $nome_mae_consta = empty($_POST['nome_mae_consta'])  ? $nao_consta_mae = 0 : $nao_consta_mae = 1;
+        $mae_nao_consta = empty($_POST['mae_nao_consta'])  ? $mae_nao_consta = 0 : $mae_nao_consta = 1;
 
         $data_nascimento = $_POST['data_nascimento'];
 
@@ -45,9 +45,9 @@
 
             //INSERT EM TBL_PACIENTE
             $stmt_id_paciente = $mysqli->prepare("INSERT INTO tbl_paciente 
-            (id, nome, data_nascimento, nome_mae, nome_mae_consta, cpf, rg, ssp, telefone, cartao_sus, id_endereco) 
+            (id, nome, data_nascimento, nome_mae, mae_nao_consta, cpf, rg, ssp, telefone, cartao_sus, id_endereco) 
             VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_id_paciente->bind_param("sssisssssi", $nome, $data_nascimento, $nome_mae, $nome_mae_consta, $cpf, $rg, $ssp, $telefone, $cartao_sus, $id_endereco);
+            $stmt_id_paciente->bind_param("sssisssssi", $nome, $data_nascimento, $nome_mae, $mae_nao_consta, $cpf, $rg, $ssp, $telefone, $cartao_sus, $id_endereco);
             $stmt_id_paciente->execute();
             $id_paciente = $mysqli->insert_id;
             $stmt_id_paciente->close();
@@ -144,8 +144,8 @@
 
         <div class="form-row">
             <div class="checkbox-group">
-                <input type="checkbox" id="nao-consta-mae" name="nome_mae_consta">
-                <label for="nao-consta-mae">Não Consta</label>
+                <input type="checkbox" id="mae-nao-consta" name="mae_nao_consta">
+                <label for="mae-nao-consta">Não Consta</label>
             </div>
         </div>
         <br>
