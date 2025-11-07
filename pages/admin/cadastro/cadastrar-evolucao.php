@@ -61,8 +61,32 @@
         <a href="../prontuarios.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
+    <?php
+        //PEGAR NOME DO PACIENTE
+        $stmt_nome_paciente = $mysqli->prepare("SELECT pa.nome FROM tbl_paciente pa WHERE pa.id = ?;");
+        $stmt_nome_paciente->bind_param("i", $id_paciente);
+        $stmt_nome_paciente->execute();
+        $nome_paciente = null;
+
+        $result = $stmt_nome_paciente->get_result();
+
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $nome_paciente = htmlspecialchars($row['nome']);
+        } else {
+            $nome_paciente = htmlspecialchars("");
+        }
+    ?>
+
     <form method="post" class="container">
         <h2>Cadastrar Evolução</h2>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="prontuario">Nome do paciente</label>
+                <input type="text" id="nome" value="<?php echo $nome_paciente ?>" name="nome" placeholder="nome" disabled>
+            </div>
+        </div>
 
         <div class="form-row">
             <div class="form-group">

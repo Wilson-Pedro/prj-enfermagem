@@ -144,11 +144,32 @@ $id_paciente = trim($id_paciente);
     <main>
         <h1>Evoluções</h1>
 
-        <div class="divBtn">
-            <a href="cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>">
-                <button type="button" class="btn btn-success">Fazer Evolução</button>
-            </a>
-        </div>
+            <div class="divBtn">
+                <a href="cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>">
+                    <button type="button" class="btn btn-success">Fazer Evolução</button>
+                </a>
+            </div>
+
+            <?php
+                $stmt_nome_paciente = $mysqli->prepare("SELECT pa.nome FROM tbl_paciente pa WHERE pa.id = ?;");
+                $stmt_nome_paciente->bind_param("i", $id_paciente);
+                $stmt_nome_paciente->execute();
+                $result = $stmt_nome_paciente->get_result();
+
+                $nome_paciente = null;
+
+                if($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $nome_paciente = htmlspecialchars($row['nome']);
+                } else {
+                    $nome_paciente = htmlspecialchars("");
+                }
+
+            ?>
+
+            <div class="container-flex">
+                <h4>Nome do paciente: <?php echo $nome_paciente ?></h4>
+            </div> <br>
 
             <table class="table">
             <?php

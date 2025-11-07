@@ -75,6 +75,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../../../css/formulario.css">
     <title>Criar Formulário</title>
     <style>
@@ -82,6 +83,35 @@
             background: #146c8f;
             background: linear-gradient(180deg,rgba(20, 108, 143, 1) 0%, rgba(59, 157, 196, 1) 100%);  
         }
+
+            .barra-busca {
+        width: 200px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+
+    .barra-busca:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .search {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .div-search {
+        margin-top: 2%;
+        margin-bottom: 2%;
+    }
+
+    .label {
+        font-weight: bold;
+    }
     </style>
 </head>
 <body>
@@ -154,18 +184,22 @@
             <input type="text" id="sus" name="cartao_sus" placeholder="SUS">
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="cep">CEP</label>
-                <input type="text" id="cep" name="cep" placeholder="cep" required>
-            </div>
+        <div class="div-search">
+            <label for="cep" class="label">CEP</label><br>
+            <input type="text" id="cep" name="cep" placeholder="cep" class="barra-busca" required>
+            <button type="button" class="search" onclick="buscarCep()">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+
+        <div class="form-group">
             <div class="form-group">
                 <label for="rua">Rua</label>
                 <input type="text" id="rua" name="rua" placeholder="Rua" required>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             <div class="form-group">
                 <label for="rua">Bairro</label>
                 <input type="text" id="bairro" name="bairro" placeholder="bairro" required>
@@ -193,6 +227,33 @@
             <button type="submit" name="finalizar">Finalizar</button>
         </div>
     </form>
+    <script>
+        async function buscarCep() {
+            const cep = document.getElementById("cep").value;
 
+            if(!cep) {
+                alert("Digite um valor para buscar");
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json`);
+
+                if(!response.ok) {
+                    throw new Error("Error na requisição da api");
+                }
+
+                const data = await response.json();
+
+                document.getElementById('rua').value = data.logradouro;
+                document.getElementById('bairro').value = data.bairro;
+                document.getElementById('cidade').value = data.localidade;
+
+            } catch(error) {
+                console.log(error);
+                alert('Error ao buscar endereço pelo cep.')
+            }
+        }
+    </script>
 </body>
 </html>
