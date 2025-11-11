@@ -1,6 +1,8 @@
 <?php
-    include('../../../protect.php');
-    include('../../../db/conexao.php');
+    include('../../protect.php');
+
+    include('../../db/conexao.php');
+
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $mysqli->set_charset("utf8");
 
@@ -43,9 +45,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../../css/formulario.css">
+    <link rel="stylesheet" href="../../css/formulario.css">
     <title>Cadastrar Evolução</title>
     <style>
         body {
@@ -58,7 +60,7 @@
 
     <!-- Botão de Voltar -->
     <div class="back-btn">
-        <a href="../prontuarios.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+        <a href="../evolucao/prontuarios.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
     <?php

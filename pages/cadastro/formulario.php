@@ -1,14 +1,15 @@
 <?php
-    include('../../../protect.php');
+    include('../../protect.php');
+
+    include('../../db/conexao.php');
 
     $dateNow = new DateTime();
     $dateFormat = $dateNow->format('Y-m-d');
-?>
-
-<?php
-    include('../../../db/conexao.php');
 
     if(isset($_POST['finalizar'])) {
+
+        //ID DO USUÁRIO
+        $id_user = $_SESSION['id'];
 
         //DADOS PARA TBL_PRONTUARIO
         $concordo = $_POST['concordo'];
@@ -53,9 +54,9 @@
             $stmt_id_paciente->close();
 
             //INSERT EM TBL_PRONTUARIO
-            $stmt_prontuario = $mysqli->prepare("INSERT INTO tbl_prontuario (id, numero_prontuario, data_atendimento, id_paciente) 
-            VALUES (NULL, ?, ?, ?);");
-            $stmt_prontuario->bind_param("isi", $numero_prontuario, $data_atendimento, $id_paciente);
+            $stmt_prontuario = $mysqli->prepare("INSERT INTO tbl_prontuario (id, numero_prontuario, data_atendimento, id_paciente, id_user) 
+            VALUES (NULL, ?, ?, ?, ?);");
+            $stmt_prontuario->bind_param("isii", $numero_prontuario, $data_atendimento, $id_paciente, $id_user);
             $stmt_prontuario->execute();
             $stmt_prontuario->close();
 
@@ -73,10 +74,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../../css/formulario.css">
+    <link rel="stylesheet" href="../../css/formulario.css">
     <title>Criar Formulário</title>
     <style>
         body {
@@ -84,45 +85,46 @@
             background: linear-gradient(180deg,rgba(20, 108, 143, 1) 0%, rgba(59, 157, 196, 1) 100%);  
         }
 
-            .barra-busca {
-        width: 200px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1em;
-    }
+        .barra-busca {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
 
 
-    .barra-busca:focus {
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
+        .barra-busca:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
 
-    .search {
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
+        .search {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
 
-    .div-search {
-        margin-top: 2%;
-        margin-bottom: 2%;
-    }
+        .div-search {
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
 
-    .label {
-        font-weight: bold;
-    }
+        .label {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <!-- Botão de Voltar -->
     <div class="back-btn">
-        <a href="../Home.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+        <a href="../../goToHome.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
     <form method="post" class="container">
         <h2>Formulário</h2>
+
         <div class="form-row">
             <div class="form-group">
                 <label for="prontuario">Número do Prontuário</label>
@@ -135,8 +137,8 @@
         </div>
 
         <div class="form-group">
-            <label for="nome">Nome do Paciente</label>
-            <input type="text" id="nome" name="nome" placeholder="Nome" required>
+            <label for="nome">Nome Completo do Paciente</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
         </div>
 
         <div class="form-row">
@@ -163,7 +165,7 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label for="nome-mae">Nome da Mãe</label>
+                <label for="nome-mae">Nome completo da Mãe</label>
                 <input type="text" id="nome-mae" name="nome_mae" placeholder="Nome da Mãe">
             </div>
             <div class="form-group">

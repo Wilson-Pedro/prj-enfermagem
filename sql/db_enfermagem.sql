@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05/11/2025 às 01:47
+-- Tempo de geração: 08/11/2025 às 15:24
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -76,7 +76,11 @@ INSERT INTO `tbl_endereco` (`id`, `cep`, `rua`, `bairro`, `cidade`, `complemento
 (10, '50012112', 'Rua da Maçã', 'Laranjeiras', 'Cidade da paz', ''),
 (11, '50012112', 'Rua da Maçã', 'Laranjeiras', 'Cidade da paz', ''),
 (12, '50012112', 'Rua da Maçã', 'Laranjeiras', 'Cidade da paz', ''),
-(13, '36612101', 'Rua de Silva Moraes', 'Laranjeiras', 'Cidade da paz', '');
+(13, '36612101', 'Rua de Silva Moraes', 'Laranjeiras', 'Cidade da paz', ''),
+(14, '65058-890', 'Rua Sete de Setembro', 'Vila Janaína', 'São Luís', ''),
+(15, '90003-020', 'Rua primeiro de Janeiro', 'São Pedro', 'São Luís', ''),
+(16, '49037-160', 'Rua Fábio Fortes', 'Atalaia', 'Aracaju', ''),
+(17, '49037-160', 'Rua Fábio Fortes', 'Atalaia', 'Aracaju', '');
 
 -- --------------------------------------------------------
 
@@ -148,7 +152,11 @@ CREATE TABLE `tbl_paciente` (
 INSERT INTO `tbl_paciente` (`id`, `nome`, `data_nascimento`, `nome_mae`, `mae_nao_consta`, `cpf`, `rg`, `ssp`, `telefone`, `cartao_sus`, `id_endereco`, `registro`) VALUES
 (9, 'Rafael Silva', '1998-10-16', 'Julia', 1, '1234567', '45646546', 'MA', '98986117230', '2342343240', 9, '2025-10-17 00:28:46'),
 (10, 'Marcelo Abreu', '1999-11-06', 'Carla', 0, '785.006.420-84', '28.850.458-6', 'MA', '99865212201', '', 12, '2025-11-05 00:11:03'),
-(11, 'Helena Carla', '1998-10-28', 'Lara', 0, '780.616.422-81', '28.850.128-2', 'MA', '(88) 98231-2345', '', 13, '2025-11-05 00:31:26');
+(11, 'Helena Carla', '1998-10-28', 'Lara', 0, '780.616.422-81', '28.850.128-2', 'MA', '(88) 98231-2345', '', 13, '2025-11-05 00:31:26'),
+(12, 'Wellinton', '1994-11-12', 'Maria', 0, '960.234.402-02', '28.120.128-2', 'MA', '(11) 92211-2345', '', 14, '2025-11-06 13:26:36'),
+(13, 'Henrique', '1996-11-12', 'Maria', 0, '901.704.402-11', '78.120.128-2', 'MA', '(11) 92881-2345', '', 15, '2025-11-06 13:28:57'),
+(14, 'Roberto Murilo Viana', '2002-11-06', 'Rosa Maria Campelo', 0, '760.267.102-11', '18.810.878-0', 'MA', '98996562230', '', 16, '2025-11-08 14:20:37'),
+(15, 'Roberto Murilo Viana', '2002-11-06', 'Rosa Maria Campelo', 0, '760.267.102-11', '18.810.878-0', 'MA', '98996562230', '', 17, '2025-11-08 14:21:20');
 
 -- --------------------------------------------------------
 
@@ -161,6 +169,7 @@ CREATE TABLE `tbl_prontuario` (
   `numero_prontuario` int(11) NOT NULL,
   `data_atendimento` date NOT NULL,
   `id_paciente` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -168,10 +177,13 @@ CREATE TABLE `tbl_prontuario` (
 -- Despejando dados para a tabela `tbl_prontuario`
 --
 
-INSERT INTO `tbl_prontuario` (`id`, `numero_prontuario`, `data_atendimento`, `id_paciente`, `registro`) VALUES
-(8, 3, '2025-10-17', 9, '2025-10-17 00:28:46'),
-(9, 4, '2025-11-04', 10, '2025-11-05 00:11:03'),
-(10, 5, '2025-11-04', 11, '2025-11-05 00:31:26');
+INSERT INTO `tbl_prontuario` (`id`, `numero_prontuario`, `data_atendimento`, `id_paciente`, `id_user`, `registro`) VALUES
+(8, 3, '2025-10-17', 9, 3, '2025-10-17 00:28:46'),
+(9, 4, '2025-11-04', 10, 3, '2025-11-05 00:11:03'),
+(10, 5, '2025-11-04', 11, 8, '2025-11-05 00:31:26'),
+(11, 6, '2025-11-06', 12, 9, '2025-11-06 13:26:36'),
+(12, 7, '2025-11-06', 13, 3, '2025-11-06 13:28:57'),
+(14, 8, '2025-11-08', 15, 9, '2025-11-08 14:21:20');
 
 -- --------------------------------------------------------
 
@@ -214,7 +226,7 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`id`, `id_tipo_usuario`, `nome`, `matricula`, `cpf`, `senha`, `data_registro`) VALUES
-(3, 1, 'Ana', '2025', '11111111111', '$2y$10$WtZ1xf1ubQ4IRnCTKwyho.wA9mYRoB8nKs5ftASRxXSU5qCEi3ul6', '2025-10-15 23:18:29'),
+(3, 1, 'Ana Maria Silva', '2025', '11111111111', '$2y$10$WtZ1xf1ubQ4IRnCTKwyho.wA9mYRoB8nKs5ftASRxXSU5qCEi3ul6', '2025-11-08 14:03:03'),
 (8, 2, 'Carla da Silva', '20251', '1234567', '$2y$10$Ganf9XyoHw6JwtiiMWcPBuDRyTS1NCdBY3wqHqAvzThMnlLFOC.Aq', '2025-10-12 12:11:50'),
 (9, 3, 'Murilo SIlva', '20252', '123456', '$2y$10$zZRLD1o0v/yp4M84x4fwV.RBDumQt7UxPIe99nx3u9cAzVmJs6YvK', '2025-10-12 12:21:55');
 
@@ -261,7 +273,8 @@ ALTER TABLE `tbl_paciente`
 --
 ALTER TABLE `tbl_prontuario`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_prontuario_paciente` (`id_paciente`);
+  ADD KEY `fk_prontuario_paciente` (`id_paciente`),
+  ADD KEY `fk_prontuario_user` (`id_user`);
 
 --
 -- Índices de tabela `tbl_tipo_usuario`
@@ -291,7 +304,7 @@ ALTER TABLE `tbl_anamnese`
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_evolucao`
@@ -309,13 +322,13 @@ ALTER TABLE `tbl_exame_fisico`
 -- AUTO_INCREMENT de tabela `tbl_paciente`
 --
 ALTER TABLE `tbl_paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_prontuario`
 --
 ALTER TABLE `tbl_prontuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_tipo_usuario`
@@ -361,7 +374,8 @@ ALTER TABLE `tbl_paciente`
 -- Restrições para tabelas `tbl_prontuario`
 --
 ALTER TABLE `tbl_prontuario`
-  ADD CONSTRAINT `fk_prontuario_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`);
+  ADD CONSTRAINT `fk_prontuario_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`),
+  ADD CONSTRAINT `fk_prontuario_user` FOREIGN KEY (`id_user`) REFERENCES `tbl_users` (`id`);
 
 --
 -- Restrições para tabelas `tbl_users`

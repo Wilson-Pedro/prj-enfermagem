@@ -146,15 +146,23 @@ if(!empty($busca)) {
         cursor: pointer;
     }
 
+    .nome-user {
+        margin-top: 1.5%;
+    }
+
+    .nome-user strong {
+        color: gray;
+    }
+
 </style>
 
 </head>
 <body>
     <header>
-        <a href="Home.php" class="voltar" title="Voltar">
+        <a href="../../goToHome.php" class="voltar" title="Voltar">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </a>
-        <a href="Home.php" title="logo estácio">
+        <a href="../../goToHome.php" title="logo estácio">
              <img src="../../img/estacio-logo.png" alt="Logo Estácio">
         </a>
     </header>
@@ -173,11 +181,14 @@ if(!empty($busca)) {
             <?php
                 try {
 
-                    $sql = "SELECT pr.id, pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento, pr.id_paciente  
-                    FROM tbl_prontuario pr 
-                    JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
-                    $where
-                    ORDER BY pr.registro DESC;";
+                    $sql = "SELECT pr.id, pr.numero_prontuario, pa.nome, pa.cpf, pa.data_nascimento, pa.nome_mae, pr.data_atendimento, 
+                                us.nome AS nome_user, pr.id_paciente  
+                                FROM tbl_prontuario pr 
+                                JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
+                                JOIN tbl_users us ON us.id = pr.id_user
+                                $where
+                                ORDER BY pr.registro DESC
+                                LIMIT 5";
 
                     $result = $mysqli->query($sql);
 
@@ -193,6 +204,7 @@ if(!empty($busca)) {
                         $data_nascimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_nascimento'])));
                         $nome_mae = htmlspecialchars($row['nome_mae']);
                         $data_atendimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_atendimento'])));
+                        $nome_user = htmlspecialchars($row['nome_user']);
                         $id_paciente = htmlspecialchars($row['id_paciente']);
             ?>
                     <div class="card">
@@ -203,12 +215,13 @@ if(!empty($busca)) {
                             <span><strong>Data de Nascimento:</strong> <?php echo $data_nascimento ?></span>
                             <span><strong>Nome da Mãe:</strong> <?php echo $nome_mae ?></span>
                             <span><strong>Data de Atendimento:</strong> <?php echo $data_atendimento ?></span>
+                            <span class="nome-user"><strong>Realizado por:</strong> <?php echo $nome_user ?></span>
 
-                            <a href="cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>" class="card-link">
+                            <a href="../cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>" class="card-link">
                                 <button type="button" class="btn btn-primary">Fazer Evolução</button>
                             </a>
 
-                            <a href="edit/formularioEdit.php?id=<?php echo $id ?>" class="card-link">
+                            <a href="../edit/formularioEdit.php?id=<?php echo $id ?>" class="card-link">
                                 <button type="button" class="btn btn-primary">Editar Formulário</button>
                             </a>
 

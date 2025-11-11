@@ -1,9 +1,7 @@
 <?php
-    include('../../../protect.php');
-?>
+    include('../../protect.php');
 
-<?php
-    include('../../../db/conexao.php');
+    include('../../db/conexao.php');
 
     try {
 
@@ -84,9 +82,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <!-- <link rel="stylesheet" href="../css/anamnese.css"> -->
+    <link rel="stylesheet" href="../../css/anamnese.css">
     <title>ANAMNESE</title>
     <style>
 
@@ -244,7 +242,7 @@
 
     <!-- Botão de Voltar -->
     <div class="back-btn">
-        <a href="../Home.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+        <a href="../../goToHome.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
     <form method="post" class="container">

@@ -24,7 +24,8 @@ unset($_SESSION['error']);
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
-            background-color: #e26f99;
+            background: #146c8f;
+            background: linear-gradient(180deg,rgba(20, 108, 143, 1) 0%, rgba(59, 157, 196, 1) 100%);  
         }
 
         .container {

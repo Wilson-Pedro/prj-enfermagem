@@ -92,10 +92,10 @@ include('../../protect.php');
 
 <body>
     <header>
-        <a href="../logout.php" class="logout" title="Sair">
+        <a href="../../logout.php" class="logout" title="Sair">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </a>
-        <a href="Home.php" title="logo estácio">
+        <a href="../../goToHome.php" title="logo estácio">
              <img src="../../img/estacio-logo.png" alt="Logo Estácio">
         </a>
     </header>
@@ -108,10 +108,10 @@ include('../../protect.php');
         </div>
 
         <div class="cards">
-            <a href="cadastro/cadastro-usuario.php" class="card">Cadastrar Usuário</a>
-            <a href="cadastro/formulario.php" class="card">Cadastrar Prontuário</a>
-            <a href="cadastro/anamnese.php" class="card">ANAMNESE</a>
-            <a href="prontuarios.php" class="card">Evolução</a>
+            <a href="../cadastro/cadastro-usuario.php" class="card">Cadastrar Usuário</a>
+            <a href="../cadastro/formulario.php" class="card">Cadastrar Prontuário</a>
+            <a href="../cadastro/anamnese.php" class="card">ANAMNESE</a>
+            <a href="../evolucao/prontuarios.php" class="card">Evolução</a>
         </div>
     </main>
 

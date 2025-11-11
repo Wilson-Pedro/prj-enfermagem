@@ -136,7 +136,7 @@ $id_paciente = trim($id_paciente);
         <a href="prontuarios.php?id=<?php echo $id_paciente ?>" class="voltar" title="Voltar">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </a>
-        <a href="Home.php" title="logo estácio">
+        <a href="../../goToHome.php" title="logo estácio">
              <img src="../../img/estacio-logo.png" alt="Logo Estácio">
         </a>
     </header>
@@ -145,7 +145,7 @@ $id_paciente = trim($id_paciente);
         <h1>Evoluções</h1>
 
             <div class="divBtn">
-                <a href="cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>">
+                <a href="../cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>">
                     <button type="button" class="btn btn-success">Fazer Evolução</button>
                 </a>
             </div>

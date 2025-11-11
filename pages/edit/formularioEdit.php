@@ -1,6 +1,6 @@
 <?php
-    include('../../../protect.php');
-    include('../../../db/conexao.php');
+    include('../../protect.php');
+    include('../../db/conexao.php');
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $mysqli->set_charset("utf8");
 
@@ -80,9 +80,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../../css/formulario.css">
+    <link rel="stylesheet" href="../../css/formulario.css">
     <title>Editar Formulário</title>
     <style>
         body {
@@ -95,7 +95,7 @@
 
     <!-- Botão de Voltar -->
     <div class="back-btn">
-        <a href="../prontuarios.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+        <a href="../evolucao/prontuarios.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
     <form method="post" class="container">
@@ -106,10 +106,11 @@
                 $stmt_sql = $mysqli->prepare("SELECT pr.id AS prontuarioId, pr.numero_prontuario, pr.data_atendimento , pa.nome, pa.cpf, pa.data_nascimento, 
                 pa.rg, pa.ssp, pa.nome_mae, pa.mae_nao_consta,
                 pa.telefone, pa.cartao_sus, 
-                en.id AS enderecoId, en.cep, en.rua, en.bairro, en.cidade, en.complemento
+                en.id AS enderecoId, en.cep, en.rua, en.bairro, en.cidade, en.complemento, us.nome AS nome_user
                 FROM tbl_prontuario pr 
                 JOIN tbl_paciente pa ON pa.id = pr.id_paciente 
-                JOIN tbl_endereco en ON en.id = pa.id_endereco
+                JOIN tbl_endereco en ON en.id = pa.id_endereco 
+                JOIN tbl_users us ON us.id = pr.id_user
                 WHERE pr.id = ?
                 LIMIT 1;");
                 
@@ -139,6 +140,7 @@
                             $bairro = htmlspecialchars($row['bairro']);
                             $cidade = htmlspecialchars($row['cidade']);
                             $complemento = htmlspecialchars($row['complemento']);
+                            $nome_user = htmlspecialchars($row['nome_user']);
         ?>
 
         <div class="form-row">
@@ -229,6 +231,14 @@
             <div class="form-group">
                 <label for="cidade">Complemento</label>
                 <textarea rows="5" cols="30" id="complemento" name="complemento" placeholder="complemento"><?php echo htmlspecialchars($complemento) ?></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            
+            <div class="form-group">
+                <label for="nome_user">Realizado por:</label>
+                <input type="text" id="nome-user" value="<?php echo $nome_user ?>" name="nome_user" placeholder="<?php echo $nome_user ?>" disabled>
             </div>
         </div>
 
