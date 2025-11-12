@@ -188,7 +188,7 @@ if(!empty($busca)) {
                                 JOIN tbl_users us ON us.id = pr.id_user
                                 $where
                                 ORDER BY pr.registro DESC
-                                LIMIT 5";
+                                LIMIT 10";
 
                     $result = $mysqli->query($sql);
 

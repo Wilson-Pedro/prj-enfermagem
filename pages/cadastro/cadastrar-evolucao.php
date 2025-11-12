@@ -10,6 +10,8 @@
     $id_paciente = $_GET['id'] ?? '';
     $id_paciente = trim($id_paciente);
 
+    $id_user = $_SESSION['id'];
+
     $dateNow = new DateTime();
     $dateFormat = $dateNow->format('Y-m-d');
 
@@ -24,12 +26,12 @@
             $observacao = $_POST['observacao'];
 
 
-            $stmt_evolucao = $mysqli->prepare("INSERT INTO tbl_evolucao (id, id_paciente, data_atendimento, pressao, glicemia, observacao) VALUES (NULL, ?, ?, ?, ?, ?)");
-            $stmt_evolucao->bind_param("issss", $id_paciente, $data_atendimento, $pressao, $glicemia, $observacao);
+            $stmt_evolucao = $mysqli->prepare("INSERT INTO tbl_evolucao (id, id_paciente, data_atendimento, pressao, glicemia, observacao, id_user) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+            $stmt_evolucao->bind_param("issssi", $id_paciente, $data_atendimento, $pressao, $glicemia, $observacao, $id_user);
             $stmt_evolucao->execute();
             $stmt_evolucao->close();
 
-            header('Location: ../evolucao.php?id='.  $id_paciente);
+            header('Location: ../evolucao/evolucao.php?id='.  $id_paciente);
 
         } catch(Exception $e) {
 

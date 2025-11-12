@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08/11/2025 às 15:24
+-- Tempo de geração: 12/11/2025 às 00:56
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -94,18 +94,20 @@ CREATE TABLE `tbl_evolucao` (
   `data_atendimento` date NOT NULL,
   `pressao` varchar(50) NOT NULL,
   `glicemia` varchar(50) NOT NULL,
-  `observacao` text NOT NULL
+  `observacao` text NOT NULL,
+  `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `tbl_evolucao`
 --
 
-INSERT INTO `tbl_evolucao` (`id`, `id_paciente`, `data_atendimento`, `pressao`, `glicemia`, `observacao`) VALUES
-(20, 9, '2025-11-02', '90', '85', 'Situação normalizou'),
-(22, 9, '2025-11-02', '90', '85', 'Pressão abaixou'),
-(23, 9, '2025-11-03', '89', '90', 'Glicemia aumentou'),
-(38, 11, '2025-11-04', '89', '88', 'Situação normalizou');
+INSERT INTO `tbl_evolucao` (`id`, `id_paciente`, `data_atendimento`, `pressao`, `glicemia`, `observacao`, `id_user`) VALUES
+(20, 9, '2025-11-02', '90', '85', 'Situação normalizou', 3),
+(22, 9, '2025-11-02', '90', '85', 'Pressão abaixou', 8),
+(23, 9, '2025-11-03', '89', '90', 'Glicemia aumentou', 9),
+(38, 11, '2025-11-04', '89', '88', 'Situação normalizou', 3),
+(40, 9, '2025-11-11', '89', '88', 'Situação estabilizada', 8);
 
 -- --------------------------------------------------------
 
@@ -252,7 +254,8 @@ ALTER TABLE `tbl_endereco`
 --
 ALTER TABLE `tbl_evolucao`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_evolucao_paciente` (`id_paciente`);
+  ADD KEY `fk_evolucao_paciente` (`id_paciente`),
+  ADD KEY `fk_evolucao_user` (`id_user`);
 
 --
 -- Índices de tabela `tbl_exame_fisico`
@@ -310,7 +313,7 @@ ALTER TABLE `tbl_endereco`
 -- AUTO_INCREMENT de tabela `tbl_evolucao`
 --
 ALTER TABLE `tbl_evolucao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_exame_fisico`
@@ -356,7 +359,8 @@ ALTER TABLE `tbl_anamnese`
 -- Restrições para tabelas `tbl_evolucao`
 --
 ALTER TABLE `tbl_evolucao`
-  ADD CONSTRAINT `fk_evolucao_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`);
+  ADD CONSTRAINT `fk_evolucao_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_paciente` (`id`),
+  ADD CONSTRAINT `fk_evolucao_user` FOREIGN KEY (`id_user`) REFERENCES `tbl_users` (`id`);
 
 --
 -- Restrições para tabelas `tbl_exame_fisico`

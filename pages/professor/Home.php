@@ -93,7 +93,7 @@ include('../../protect.php');
 
 <body>
     <header>
-        <a href="../logout.php" class="logout" title="Sair">
+        <a href="../../logout.php" class="logout" title="Sair">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </a>
         <a href="Home.php" title="logo estácio">
@@ -105,9 +105,14 @@ include('../../protect.php');
     <main>
         <div class="profile">
             <img src="../../img/imageHomeUser.png" alt="Usuário">
-            <h1>Seja Bem-vindo(a) <?php echo $_SESSION['nome']?>!</h1>
+            <h1>Seja Bem-vindo(a) professor(a) <?php echo $_SESSION['nome']?>!</h1>
         </div>
 
+        <div class="cards">
+            <a href="../cadastro/formulario.php" class="card">Cadastrar Prontuário</a>
+            <a href="../cadastro/anamnese.php" class="card">ANAMNESE</a>
+            <a href="../evolucao/prontuarios.php" class="card">Evolução</a>
+        </div>
     </main>
 
 </body>

@@ -175,9 +175,10 @@ $id_paciente = trim($id_paciente);
             <?php
                 try {
 
-                    $sql = "SELECT ev.id as id_evolucao, ev.data_atendimento, ev.pressao, ev.glicemia, ev.observacao  
+                    $sql = "SELECT ev.id as id_evolucao, ev.data_atendimento, ev.pressao, ev.glicemia, ev.observacao, us.nome AS nome_user 
                             FROM tbl_evolucao ev 
                             JOIN tbl_paciente pa ON pa.id = ev.id_paciente 
+                            JOIN tbl_users us ON us.id = ev.id_user 
                             WHERE pa.id = $id_paciente
                             ORDER BY ev.id DESC;";
 
@@ -193,6 +194,7 @@ $id_paciente = trim($id_paciente);
                         <thead class="table-dark">
                             <tr>
                             <th scope="col" style="text-align:center">Data da evolução</th>
+                            <th scope="col" style="text-align:center">Responsável</th>
                             <th scope="col" style="text-align:center">Pressão</th>
                             <th scope="col" style="text-align:center">Glicemia</th>
                             <th scope="col" style="text-align:center">Observação</th>
@@ -206,10 +208,12 @@ $id_paciente = trim($id_paciente);
                         $pressao = htmlspecialchars($row['pressao']);
                         $glicemia = htmlspecialchars($row['glicemia']);
                         $observacao = htmlspecialchars($row['observacao']);
+                        $nome_user = htmlspecialchars($row['nome_user']);
             ?>
                         <tbody>
                             <tr>
                             <td  style="width:20%;text-align:center"><?php echo $data_atendimento ?></td>
+                            <td  style="width:20%;text-align:center"><?php echo $nome_user ?></td>
                             <td  style="width:10%;text-align:center"><?php echo $pressao ?></td>
                             <td  style="width:10%;text-align:center"><?php echo $glicemia ?></td>
                             <td><?php echo $observacao ?></td>
