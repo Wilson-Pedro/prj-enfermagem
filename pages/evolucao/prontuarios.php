@@ -126,7 +126,7 @@ if(!empty($busca)) {
     }
 
     .barra-busca {
-        width: 200px;
+        width: 30%;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -135,7 +135,6 @@ if(!empty($busca)) {
 
 
     .barra-busca:focus {
-        width: 300px;
         outline: none;
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
@@ -154,6 +153,12 @@ if(!empty($busca)) {
         color: gray;
     }
 
+    form label {
+        font-size: 120%;
+        font-weight: bold;
+        color: #333;
+    }
+
 </style>
 
 </head>
@@ -170,6 +175,7 @@ if(!empty($busca)) {
     <main>
         <h1>Lista de Prontuários</h1>
         <form action="" method="GET">
+            <label for="">Buscar Por Nome: </label>
             <input type="text" name="busca" placeholder="Pesquisar..." class="barra-busca" value="<?php htmlspecialchars($busca); ?>">
             <button type="submit">
                 <i class="bi bi-search"></i>

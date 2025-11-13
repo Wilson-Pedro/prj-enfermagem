@@ -1,5 +1,7 @@
 <?php
 include('../../protect.php');
+
+$id = $_SESSION['id'];
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +11,7 @@ include('../../protect.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
-    <title>Home</title>
+    <title>Cadastros</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
@@ -92,7 +94,7 @@ include('../../protect.php');
 
 <body>
     <header>
-        <a href="../../logout.php" class="logout" title="Sair">
+        <a href="../../goToHome.php" class="logout" title="Sair">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </a>
         <a href="../../goToHome.php" title="logo estácio">
@@ -104,13 +106,12 @@ include('../../protect.php');
     <main>
         <div class="profile">
             <img src="../../img/imageHomeUser.png" alt="Usuário">
-            <h1>Seja Bem-vindo(a) <?php echo $_SESSION['nome'] ?>!</h1>
+            <h1>Cadastros</h1>
         </div>
 
         <div class="cards">
-            <a href="../cadastro/cadastros.php" class="card">Cadastro</a>
-            <a href="../cadastro/anamnese.php" class="card">ANAMNESE</a>
-            <a href="../evolucao/prontuarios.php" class="card">Evolução</a>
+            <a href="../cadastro/cadastro-usuario.php" class="card">Cadastrar Usuário</a>
+            <a href="../cadastro/formulario.php" class="card">Cadastrar Prontuário</a>
         </div>
     </main>
 

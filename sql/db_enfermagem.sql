@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 12/11/2025 às 00:56
+-- Tempo de geração: 13/11/2025 às 00:36
 -- Versão do servidor: 10.6.15-MariaDB
 -- Versão do PHP: 8.2.0
 
@@ -94,6 +94,10 @@ CREATE TABLE `tbl_evolucao` (
   `data_atendimento` date NOT NULL,
   `pressao` varchar(50) NOT NULL,
   `glicemia` varchar(50) NOT NULL,
+  `pulso` varchar(20) NOT NULL,
+  `frequencia_cardiaca` varchar(20) NOT NULL,
+  `frequencia_respiratoria` varchar(20) NOT NULL,
+  `temperatura_axilar` varchar(20) NOT NULL,
   `observacao` text NOT NULL,
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -102,12 +106,14 @@ CREATE TABLE `tbl_evolucao` (
 -- Despejando dados para a tabela `tbl_evolucao`
 --
 
-INSERT INTO `tbl_evolucao` (`id`, `id_paciente`, `data_atendimento`, `pressao`, `glicemia`, `observacao`, `id_user`) VALUES
-(20, 9, '2025-11-02', '90', '85', 'Situação normalizou', 3),
-(22, 9, '2025-11-02', '90', '85', 'Pressão abaixou', 8),
-(23, 9, '2025-11-03', '89', '90', 'Glicemia aumentou', 9),
-(38, 11, '2025-11-04', '89', '88', 'Situação normalizou', 3),
-(40, 9, '2025-11-11', '89', '88', 'Situação estabilizada', 8);
+INSERT INTO `tbl_evolucao` (`id`, `id_paciente`, `data_atendimento`, `pressao`, `glicemia`, `pulso`, `frequencia_cardiaca`, `frequencia_respiratoria`, `temperatura_axilar`, `observacao`, `id_user`) VALUES
+(20, 9, '2025-11-02', '90', '85', '', '', '', '', 'Situação normalizou', 3),
+(22, 9, '2025-11-02', '90', '85', '', '', '', '', 'Pressão abaixou', 8),
+(23, 9, '2025-11-03', '89', '90', '', '', '', '', 'Glicemia aumentou', 9),
+(38, 11, '2025-11-04', '89', '88', '', '', '', '', 'Situação normalizou', 3),
+(40, 9, '2025-11-11', '89', '88', '', '', '', '', 'Situação estabilizada', 8),
+(41, 15, '2025-11-11', '88', '90', '', '', '', '', 'Pressão normalizou', 9),
+(42, 15, '2025-11-12', '80', '88', '100', '90', '14', '35.5', 'Situação normalizou', 3);
 
 -- --------------------------------------------------------
 
@@ -313,7 +319,7 @@ ALTER TABLE `tbl_endereco`
 -- AUTO_INCREMENT de tabela `tbl_evolucao`
 --
 ALTER TABLE `tbl_evolucao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_exame_fisico`

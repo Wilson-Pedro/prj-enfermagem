@@ -23,11 +23,19 @@
             $data_atendimento = $_POST['data_atendimento'];
             $pressao = $_POST['pressao'];
             $glicemia = $_POST['glicemia'];
+            $pulso = $_POST['pulso'];
+            $frequencia_cardiaca = $_POST['frequencia_cardiaca'];
+            $frequencia_respiratoria = $_POST['frequencia_respiratoria'];
+            $temperatura_axilar = $_POST['temperatura_axilar'];
             $observacao = $_POST['observacao'];
 
 
-            $stmt_evolucao = $mysqli->prepare("INSERT INTO tbl_evolucao (id, id_paciente, data_atendimento, pressao, glicemia, observacao, id_user) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
-            $stmt_evolucao->bind_param("issssi", $id_paciente, $data_atendimento, $pressao, $glicemia, $observacao, $id_user);
+            $stmt_evolucao = $mysqli->prepare("INSERT INTO tbl_evolucao 
+                (id, id_paciente, data_atendimento, pressao, glicemia, pulso, frequencia_cardiaca, frequencia_respiratoria, temperatura_axilar,  observacao, id_user) 
+                VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt_evolucao->bind_param("issssssssi", 
+            $id_paciente, $data_atendimento, $pressao, $glicemia, $pulso, $frequencia_cardiaca, $frequencia_respiratoria, $temperatura_axilar, $observacao, $id_user);
+            
             $stmt_evolucao->execute();
             $stmt_evolucao->close();
 
@@ -62,7 +70,7 @@
 
     <!-- Botão de Voltar -->
     <div class="back-btn">
-        <a href="../evolucao/prontuarios.php"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
+        <a href="../evolucao/evolucao.php?id=<?php echo $id_paciente ?>"><i class="bi bi-arrow-left-circle-fill" id="iconeVoltar"></i></a>
     </div>
 
     <?php
@@ -94,19 +102,43 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label for="atendimento">Data do Atendimento</label>
+                <label for="data-atendimento">Data do Atendimento</label>
                 <input type="date" id="data_atendimento" value="<?php echo $dateFormat ?>" name="data_atendimento" placeholder="Dia / Mês / Ano" required>
             </div>
             <div class="form-group">
-                <label for="prontuario">Pressão</label>
-                <input type="number" id="pressao" value="" name="pressao" placeholder="Pressão" required>
+                <label for="pressao">Pressão Arterial(mmHg)</label>
+                <input type="number" id="pressao" value="" name="pressao" placeholder="Pressão Arterial(nmHg)" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="glicemia">Glicemia</label>
+                <input type="number" id="glicemia" value="" name="glicemia" placeholder="Glicemia" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pulso">Pulso(bpm)</label>
+                <input type="number" id="pulso" value="" name="pulso" placeholder="Pulso" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="fc">Frequência cardiaca(bpm)</label>
+                <input type="number" id="frequencia_cardiaca" value="" name="frequencia_cardiaca" placeholder="Frequência cardiaca" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fr">Frequência respiratoria</label>
+                <input type="number" id="frequencia_respiratoria" value="" name="frequencia_respiratoria" placeholder="Frequência respiratoria" required>
             </div>
         </div>
 
         <div class="form-group">
             <div class="form-group">
-                <label for="rua">Glicemia</label>
-                <input type="text" id="glicemia" value="" name="glicemia" placeholder="Glicemia" required>
+                <label for="Temperatura Axilar">Temperatura Axilar(°C)</label>
+                <input type="text" id="temperatura_axilar" value="" name="temperatura_axilar" placeholder="Temperatura Axilar" required>
             </div>
         </div>
 

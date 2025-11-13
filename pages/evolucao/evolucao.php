@@ -175,7 +175,8 @@ $id_paciente = trim($id_paciente);
             <?php
                 try {
 
-                    $sql = "SELECT ev.id as id_evolucao, ev.data_atendimento, ev.pressao, ev.glicemia, ev.observacao, us.nome AS nome_user 
+                    $sql = "SELECT ev.id as id_evolucao, ev.data_atendimento, ev.pressao, ev.glicemia, ev.pulso, 
+                                ev.frequencia_cardiaca, ev.frequencia_respiratoria, ev.temperatura_axilar, ev.observacao, us.nome AS nome_user 
                             FROM tbl_evolucao ev 
                             JOIN tbl_paciente pa ON pa.id = ev.id_paciente 
                             JOIN tbl_users us ON us.id = ev.id_user 
@@ -195,8 +196,12 @@ $id_paciente = trim($id_paciente);
                             <tr>
                             <th scope="col" style="text-align:center">Data da evolução</th>
                             <th scope="col" style="text-align:center">Responsável</th>
-                            <th scope="col" style="text-align:center">Pressão</th>
+                            <th scope="col" style="text-align:center">Pressão Arterial</th>
                             <th scope="col" style="text-align:center">Glicemia</th>
+                            <th scope="col" style="text-align:center">Pulso</th>
+                            <th scope="col" style="text-align:center">FC</th>
+                            <th scope="col" style="text-align:center">FR</th>
+                            <th scope="col" style="text-align:center">Tempertura Axilar</th>
                             <th scope="col" style="text-align:center">Observação</th>
                             </tr>
                         </thead>
@@ -207,15 +212,23 @@ $id_paciente = trim($id_paciente);
                         $data_atendimento = htmlspecialchars(date('d/m/Y', strtotime($row['data_atendimento'])));
                         $pressao = htmlspecialchars($row['pressao']);
                         $glicemia = htmlspecialchars($row['glicemia']);
+                        $pulso = htmlspecialchars($row['pulso']);
+                        $frequencia_cardiaca = htmlspecialchars($row['frequencia_cardiaca']);
+                        $frequencia_respiratoria = htmlspecialchars($row['frequencia_respiratoria']);
+                        $temperatura_axilar = htmlspecialchars($row['temperatura_axilar']);
                         $observacao = htmlspecialchars($row['observacao']);
                         $nome_user = htmlspecialchars($row['nome_user']);
             ?>
                         <tbody>
                             <tr>
-                            <td  style="width:20%;text-align:center"><?php echo $data_atendimento ?></td>
-                            <td  style="width:20%;text-align:center"><?php echo $nome_user ?></td>
-                            <td  style="width:10%;text-align:center"><?php echo $pressao ?></td>
+                            <td  style="width:10%;text-align:center"><?php echo $data_atendimento ?></td>
+                            <td  style="width:12%;text-align:center"><?php echo $nome_user ?></td>
+                            <td  style="width:20%;text-align:center"><?php echo $pressao ?>/80 mmHg</td>
                             <td  style="width:10%;text-align:center"><?php echo $glicemia ?></td>
+                            <td  style="width:10%;text-align:center"><?php echo $pulso ?>xbpm</td>
+                            <td  style="width:10%;text-align:center"><?php echo $frequencia_cardiaca ?>bpm</td>
+                            <td  style="width:10%;text-align:center"><?php echo $frequencia_respiratoria ?>ipm</td>
+                            <td  style="width:10%;text-align:center"><?php echo $temperatura_axilar ?>°C</td>
                             <td><?php echo $observacao ?></td>
                             </tr>
                         </tbody>
