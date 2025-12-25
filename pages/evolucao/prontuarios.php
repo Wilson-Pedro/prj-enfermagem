@@ -159,6 +159,13 @@ if(!empty($busca)) {
         color: #333;
     }
 
+    .icons {
+        text-align: center;
+        font-size: 130%;
+        cursor: pointer;
+        color: red;
+    }
+
 </style>
 
 </head>
@@ -182,8 +189,22 @@ if(!empty($busca)) {
             </button>
         </form> <br>
 
-        <div class="card-list">
 
+            <table class="table table-sm table-striped table-hover table-responsive">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Nascimento</th>
+                        <th>Nome da Mãe</th>
+                        <th>Atendimento</th>
+                        <th>Realizado por</th>
+                        <th>Evolução</th>
+                        <th>Editar</th>
+                        <th>Ver Evoluções</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 90%;">
             <?php
                 try {
 
@@ -213,7 +234,31 @@ if(!empty($busca)) {
                         $nome_user = htmlspecialchars($row['nome_user']);
                         $id_paciente = htmlspecialchars($row['id_paciente']);
             ?>
-                    <div class="card">
+
+                        <tr>
+                            <td><?php echo $nome ?></td>
+                            <td><?php echo $cpf ?></td>
+                            <td><?php echo $data_nascimento ?></td>
+                            <td><?php echo $nome_mae ?></td>
+                            <td><?php echo $data_atendimento ?></td>
+                            <td><?php echo $nome_user ?></td>
+                            <td class="icons">
+                                <a href="../cadastro/cadastrar-evolucao.php?id=<?php echo $id_paciente ?>" class="card-link">
+                                    <i class="bi bi-clipboard2-plus-fill"></i>
+                                </a>
+                            </td>
+                            <td class="icons">
+                                <a href="../edit/formularioEdit.php?id=<?php echo $id ?>" class="card-link">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </td>
+                            <td class="icons">
+                                <a href="evolucao.php?id=<?php echo $id_paciente ?>" class="card-link">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <!-- <div class="card">
                         <h2>Prontuário Nº <?php echo $row['numero_prontuario'] ?></h2>
                         <div class="info">
                             <span><strong>Nome:</strong> <?php echo $nome ?></span>
@@ -228,14 +273,14 @@ if(!empty($busca)) {
                             </a>
 
                             <a href="../edit/formularioEdit.php?id=<?php echo $id ?>" class="card-link">
-                                <button type="button" class="btn btn-primary">Editar Formulário</button>
+                                <i class="bi bi-pencil-square text-primary"></i>
                             </a>
 
                             <a href="evolucao.php?id=<?php echo $id_paciente ?>" class="card-link">
-                                <button type="button" class="btn btn-primary">Ver Evoluções</button>
+                                <i class="bi bi-eye text-primary"></i>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
 
             <?php 
                         }
@@ -245,8 +290,9 @@ if(!empty($busca)) {
                     error_log("Error ao listar prontuários " . $e->getMessage());
                 }
             ?>
+                </tbody>
+            </table>
 
-        </div>
     </main>
 
     <!-- Rodapé -->
